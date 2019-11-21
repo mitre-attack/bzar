@@ -176,6 +176,7 @@ export
 	const rpc_execution : set[string] = 
 	{
 	    # ATT&CK Technique - T1035 Service Execution
+		["svcctl::CreateServiceWOW64W"],
 		["svcctl::CreateServiceW"],
 		["svcctl::CreateServiceA"],
 		["svcctl::StartServiceW"],
