@@ -164,6 +164,10 @@ event smb1_write_andx_response(c: connection, hdr: SMB1::Header, written_bytes: 
 	# policy/protocols/smb/smb1-main.bro#smb1_write_andx_request.
 	# Can't hurt to double-check this.
 
+	# Skip if the request was not seen and we don't know what the current file is
+	if ( !c?$smb_state || !c$smb_state?$current_file )
+		return;
+
 	if ( c$smb_state$current_tree?$path && !c$smb_state$current_file?$path ) 
 		c$smb_state$current_file$path = c$smb_state$current_tree$path; 
 
