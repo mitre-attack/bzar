@@ -1,0 +1,120 @@
+#
+# BZAR Changes
+#
+# Copyright 2018 The MITRE Corporation.  All Rights Reserved.
+# Approved for public release.  Distribution unlimited.  Case number 18-3868.
+#
+
+# 20191121
+
+1. Summary of Changes, New Functional Capabilities
+Two new features are introduced, and one existing feature is improved.  On new feature is to be able to toggle on/off whether or not an ATT&CK Technique is reported in the Notice Log.  Another new feature is to be able to toggle on/off whether or not an ATTACK Technique is detected (NOTE: disabling detection will thereby preclude that item from being reported).
+
+Also, the whitelisting feature is improved. In the original release, BZAR had a global whitelist, by IP address only.  The global whitelist was not the best design because it could create unnecessary blind-spots for the security analyst.  For example, if one endpoint is authorized to perform remote file copy to a Windows Admin Share as part of routine business operations, then it would be appropriate to add that endpoint to the whitelist.  However, that same endpoint may not be authorized to perform remote execution via the Task Scheduler service.  Therefore, a single global whitelist would effectively ignore the actions of that endpoint regardless of the type of activity.  This change makes the whitelist more granular, so that a unique whitelist could be specified for each ATT&CK Technique.  In addition to the granularity, whitelists can be specified by IP addresses, subnets, and host names.
+
+These new and improved configuration options will allow the user to better tune BZAR for their specific operational environment.
+
+1.1. BZAR Actions - ATT&CK Indicators to Detect and Report
+     #
+     # Description:
+     #    These config options should be tuned for your specific environment.
+     #    Use the Zeek Configuration Framework to change the default values 
+     #    during runtime.
+     #
+     # xxxx_detect_option:
+     #    Option to control whether or not to detect this ATT&CK indicator.
+     #    If set to False, then it effectively disables _report_option, too.
+     #
+     # xxxx_report_option:
+     #    Option to control whether or not to write to the Notice Log.
+     #    If _detect_option is False, then this option has no effect.
+
+1.2. BZAR Whitelists - Ignore ATT&CK Indicators Involving these Endpoints
+     #
+     # Description:
+     #    These config options should be tuned for your specific environment.
+     #    Use the Zeek Configuration Framework to change the default values 
+     #    during runtime.
+     # 
+     #    Whitelists can be specified by IP address, IP subnet, or host
+     #    name for each ATT&CK indicator.  Furthermore, the whitelists can
+     #    be specified by originating address, subnet, or hostname; and by
+     #    responding address, subnet, or hostname.
+     #
+     # xxxx_whitelist_orig_addrs : set[addr]
+     #    Add originating IP addresses to ignore for an ATT&CK indicator.
+     #    The value of 'c$id$orig_h' is checked against this list before 
+     #    writing to Notice Log and/or SumStats Observation.
+     #
+     # xxxx_whitelist_resp_addrs : set[addr]
+     #    Add responding IP addresses to ignore for an ATT&CK indicator.
+     #    The value of 'c$id$resp_h' is checked against this list before 
+     #    writing to Notice Log and/or SumStats Observation.
+     #
+     # xxxx_whitelist_orig_subnets : set[subnet]
+     #    Add originating IP subnets to ignore for an ATT&CK indicator.
+     #    The value of 'c$id$orig_h' is checked against this list before 
+     #    writing to Notice Log and/or SumStats Observation.
+     #
+     # xxxx_whitelist_resp_subnets : set[subnet]
+     #    Add responding IP subnets to ignore for an ATT&CK indicator.
+     #    The value of 'c$id$resp_h' is checked against this list before 
+     #    writing to Notice Log and/or SumStats Observation.
+     #
+     # xxxx_whitelist_orig_names : set[string]
+     #    Add originating IP addresses to ignore for an ATT&CK indicator.
+     #    CAUTION: A DNS reverse-lookup of the value of 'c$id$orig_h' is
+     #    performed and the result is checked against this list before
+     #    writing to Notice Log and/or SumStats Observation.  The DNS
+     #    reverse-lookup could adversely affect system performance.
+     #
+     # xxxx_whitelist_resp_names : set[string]
+     #    Add responding IP addresses to ignore for an ATT&CK indicator.
+     #    CAUTION: A DNS reverse-lookup of the value of 'c$id$resp_h' is
+     #    performed and the result is checked against this list before
+     #    writing to Notice Log and/or SumStats Observation.  The DNS
+     #    reverse-lookup could adversely affect system performance.
+
+
+2.  Summary of Changes, New Code/File Structure
+The new features described above triggered other changes in the structure of the Bro scripts, adding new subroutines to account for the new functionality and splitting apart source code files to keep it modular and manageable.
+
+
+2.1. Split Apart 'main.bro' Script
+Old: main.bro -> New: main.bro; bzar_config_options.bro
+
+Default values for the _detect_option, _report_option, and _whitelist options are initialized in bzar_config_options.bro script.
+
+
+2.2. RPC Indicators Grouped by ATT&CK Technique Identifier
+The RPC indicators are now attributed to specific ATT&CK Technique IDs.  Originally, the RPC indicators were grouped by ATT&CK Tactic.  For example, RPC operations associated with Scheduled Tasks, Service Execution, and WMI were all grouped together as "ATTACK::Execution".  Now, these are grouped by ATT&CK Technique instead.  Allows for more granular control of toggling detection, reporting, and whitelisting.
+
+The definitions/initializations for the Technique-specific groupings are moved from bzar_dce-rpc.bro into bzar_dce-rpc_consts.bro.
+
+
+2.3. Split Apart 'bzar_dce-rpc.bro' Script
+Old: bzar_dce-rpc.bro -> New: bzar_dce-rpc_detect.bro; bzar_dce-rpc_report.bro
+
+The _detect script uses Zeek events from the DCE-RPC protocol analyzer to look for RPC indicators and then calls BZAR::rpc_txxxx_log subroutine.
+
+The _report script contains the code for the various _log subroutines.  Each ATT&CK Technique has its own _log subroutine.
+
+
+2.4. Split Apart 'bzar_smb.bro' Script
+Old: bzar_smb.bro -> New: bzar_smb_consts.bro; bzar_smb_report.bro; bzar_smb1_detect.bro; bzar_smb2_detect.bro
+
+The _smb1_detect script uses Zeek events from the SMB protocol analyzer to look for indicators specific to SMB v1 and then calls BZAR::smb_txxxx_log subroutine.
+
+The _smb2_detect script uses Zeek events from the SMB protocol analyzer to look for indicators specific to SMB v2 and then calls BZAR::smb_txxxx_log subroutine.
+
+The _report script contains the code for the various _log subroutines.  Each ATT&CK Technique has its own _log subroutine.
+
+SMB-related constants/globals are moved into bzar_smb_consts.bro.
+
+2.5. Changes to 'bzar_files.bro' Script
+A toggle switch already existed to enable/disable Lateral Movement-related file extraction, per recommendation earlier this year from Murad's code review.  Added new toggle switch to enable/disable reporting of Lateral Movement-related file extraction.  Now, you can do the extraction, and not write to the Notice Log that the file extraction occurred.  Helps reduce noise in the notice log.
+
+2.6. Changes to '__load__.bro' Script
+Added 'load' statements to load the new scripts described above.
+
+#end CHANGES

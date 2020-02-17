@@ -1,16 +1,256 @@
 #
 # File: bzar_dce-rpc_consts.bro
 # Created: 20180701
-# Updated: 20190225
+# Updated: 20200217
 #
 # Copyright 2018 The MITRE Corporation.  All Rights Reserved.
-# Approved for public release.  Distribution unlimited.  Case number 18-2489.
+# Approved for public release.  Distribution unlimited.  Case number 18-3868.
 #
 
 module BZAR;
 
 export
 {
+	# ATT&CK - Credential Access Techniques
+	#
+	# Windows DCE-RPC functions (endpoint::operation) used for
+	# Credential Access on the remote system
+	# 
+	# Relevant ATT&CK Technique(s):
+	#    T1003 Credential Dumping
+
+	const t1003_rpc_strings : set[string] =
+	{
+		# T1003 Credential Dumping
+		["drsuapi::DRSReplicaSync"],
+		["drsuapi::DRSGetNCChanges"],
+	} &redef;
+
+
+	# ATT&CK - Defense Evasion Techniques
+	#
+	# Windows DCE-RPC functions (endpoint::operation) used for
+	# Defense Evasion on the remote system
+	# 
+	# Relevant ATT&CK Technique(s):
+	#    T1070 Indicator Removal on Host
+
+	const t1070_rpc_strings : set[string] =
+	{
+		# T1070 Indicator Removal on Host
+		# Clear Event Logs
+		["eventlog::ElfrClearELFW"],
+		["eventlog::ElfrClearELFA"],
+		["IEventService::EvtRpcClearLog"],
+
+		# T1070 Indicator Removal on Host
+		# Force System Shutdown or Reboot
+		["winreg::BaseInitiateSystemShutdown"],
+		["winreg::BaseInitiateSystemShutdownEx"],
+		["InitShutdown::BaseInitiateShutdown"],
+		["InitShutdown::BaseInitiateShutdownEx"],
+		["WindowsShutdown::WsdrInitiateShutdown"],
+		["winstation_rpc::RpcWinStationShutdownSystem"],
+		["samr::SamrShutdownSamServer"], # MSDN says not used on the wire
+	} &redef;
+
+
+	# ATT&CK - Execution Techniques
+	#
+	# Windows DCE-RPC functions (endpoint::operation) used for 
+	# Execution on the remote system
+	# 
+	# Relevant ATT&CK Technique(s):
+	#    T1035 Service Execution
+	#    T1047 Windows Management Instrumentation
+	#    T1053 Scheduled Tasks
+
+	const t1035_rpc_strings : set[string] = 
+	{
+		# T1035 Service Execution
+		["svcctl::CreateServiceWOW64W"],
+		["svcctl::CreateServiceWOW64A"],
+		["svcctl::CreateServiceW"],
+		["svcctl::CreateServiceA"],
+		["svcctl::StartServiceW"],
+		["svcctl::StartServiceA"],
+	} &redef;
+
+	const t1047_rpc_strings : set[string] = 
+	{
+		# T1047 Windows Management Instrumentation
+		["IWbemServices::ExecMethod"],
+		["IWbemServices::ExecMethodAsync"],
+	} &redef;
+
+	const t1053_rpc_strings : set[string] =
+	{
+		# T1053 Scheduled Task
+		["atsvc::JobAdd"],
+		["ITaskSchedulerService::SchRpcRegisterTask"],
+		["ITaskSchedulerService::SchRpcRun"],
+		["ITaskSchedulerService::SchRpcEnableTask"],
+	} &redef;
+
+
+	# ATT&CK - Persistence Techniques
+	#
+	# Windows DCE-RPC functions (endpoint::operation) used for
+	# Persistence on the remote system
+	# 
+	# Relevant ATT&CK Technique(s):
+	#    T1004 Winlogon Helper DLL
+	#    T1013 Port Monitors
+
+	const t1004_rpc_strings : set[string] = 
+	{
+		# T1004 Winlogon Helper DLL
+		["ISecLogon::SeclCreateProcessWithLogonW"],
+		["ISecLogon::SeclCreateProcessWithLogonExW"],
+	} &redef;
+
+	const t1013_rpc_strings : set[string] = 
+	{
+		# T1013 Port Monitors
+		["spoolss::RpcAddMonitor"],		# aka winspool | spoolss
+		["spoolss::RpcAddPrintProcessor"],	# aka winspool | spool
+		["IRemoteWinspool::RpcAsyncAddMonitor"],
+		["IRemoteWinspool::RpcAsyncAddPrintProcessor"],
+	} &redef;
+
+
+	# ATT&CK - Discovery Techniques
+	#
+	# Windows DCE-RPC functions (endpoint::operation) used for
+	# Discovery of users, hosts, files, shares, networks, time
+	#
+	# Relevant ATT&CK Technique(s):
+	#    T1016 System Network Configuration Discovery
+	#    T1018 Remote System Discovery 
+	#    T1033 System Owner/User Discovery 
+	#    T1049 System Network Connections Discovery
+	#    T1069 Permission Groups Discovery 
+	#    T1082 System Information Discovery
+	#    T1083 File & Directory Discovery
+	#    T1087 Account Discovery
+	#    T1124 System Time Discovery
+	#    T1135 Network Share Discovery
+
+	const t1016_rpc_strings : set[string] =
+	{
+		# T1016 System Network Configuration Discovery
+		["srvsvc::NetrServerTransportEnum"],
+		["wkssvc::NetrWkstaTransportEnum"],
+	} &redef;
+
+	const t1018_rpc_strings : set[string] =
+	{
+		# T1018 Remote System Discovery 
+		["srvsvc::NetrServerGetInfo"],
+		["srvsvc::NetrServerAliasEnum"],
+		["wkssvc::NetrWkstaGetInfo"],
+	} &redef;
+
+	const t1033_rpc_strings : set[string] =
+	{
+		# T1033 System Owner/User Discovery 
+		["lsarpc::LsarGetUserName"],
+		["lsarpc::LsarEnumerateTrustedDomainsEx"],
+		["lsarpc::LsarGetSystemAccessAccount"],
+
+		["lsarpc::LsarQueryDomainInformationPolicy"],
+		["lsarpc::LsarQueryInfoTrustedDomain"],
+
+		["samr::SamrEnumerateGroupsInDomain"],
+		["samr::SamrEnumerateDomainsInSamServer"],
+
+		["samr::SamrQueryInformationDomain"],
+		["samr::SamrQueryInformationDomain2"],
+		["samr::SamrQueryInformationGroup"],
+	} &redef;
+
+	const t1049_rpc_strings : set[string] =
+	{
+		# T1049 System Network Connections Discovery
+		["srvsvc::NetrConnectionEnum"],
+		["srvsvc::NetrSessionEnum"],
+	} &redef;
+
+	const t1069_rpc_strings : set[string] =
+	{
+		# T1069 Permission Groups Discovery 
+		["lsarpc::LsarEnumerateAccountRights"],
+		["lsarpc::LsarEnumerateAccountsWithUserRight"],
+		["lsarpc::LsarEnumeratePrivileges"],
+		["lsarpc::LsarEnumeratePrivilegesAccount"],
+		["lsarpc::LsarLookupPrivilegeValue"],
+		["lsarpc::LsarLookupPrivilegeName"],
+		["lsarpc::LsarLookupPrivilegeDisplayName"],
+
+		["samr::SamrGetGroupsForUser"],
+		["samr::SamrGetAliasMembership"],
+		["samr::SamrGetMembersInAlias"],
+		["samr::SamrGetMembersInGroup"],
+	} &redef;
+
+	const t1082_rpc_strings : set[string] =
+	{
+		# T1082 System Information Discovery
+		["lsarpc::LsarQueryInformationPolicy"],
+		["lsarpc::LsarQueryInformationPolicy2"],
+		["lsarpc::LsarQueryTrustedDomainInfo"],
+		["lsarpc::LsarQueryTrustedDomainInfoByName"],
+
+		["samr::SamrGetUserDomainPasswordInformation"],
+	} &redef;
+
+	const t1083_rpc_strings : set[string] =
+	{
+		# T1083 File & Directory Discovery
+		["srvsvc::NetrFileEnum"],
+	} &redef;
+
+	const t1087_rpc_strings : set[string] =
+	{
+		# T1087 Account Discovery
+		["lsarpc::LsarEnumerateAccounts"],
+		["lsarpc::LsarLookupNames"],
+		["lsarpc::LsarLookupNames2"],
+		["lsarpc::LsarLookupNames3"],
+		["lsarpc::LsarLookupNames4"],
+		["lsarpc::LsarLookupSids"],
+		["lsarpc::LsarLookupSids2"],
+		["lsarpc::LsarLookupSids3"],
+
+		["samr::SamrEnumerateAliasesInDomain"],
+		["samr::SamrEnumerateUsersInDomain"],
+		["samr::SamrLookupNamesInDomain"],
+		["samr::SamrLookupIdsInDomain"],
+		["samr::SamrLookupDomainInSamServer"],
+		["samr::SamrQueryDisplayInformation"],
+		["samr::SamrQueryDisplayInformation2"],
+		["samr::SamrQueryDisplayInformation3"],
+		["samr::SamrQueryInformationAlias"],
+		["samr::SamrQueryInformationUser"],
+		["samr::SamrQueryInformationUser2"],
+
+		["wkssvc::NetrWkstaUserEnum"],
+	} &redef;
+
+	const t1124_rpc_strings : set[string] =
+	{
+		# T1124 System Time Discovery
+		["srvsvc::NetrRemoteTOD"],
+	} &redef;
+
+	const t1135_rpc_strings : set[string] =
+	{
+		# T1135 Network Share Discovery
+		["srvsvc::NetrShareEnum"],
+		["srvsvc::NetrShareGetInfo"],
+	} &redef;
+
+
 	# Microsoft DCE-RPC Interface UUIDs (aka "endpoints") -- 144 more --
 	# to add to Bro DCE_RPC::uuid_endpoint_map.
 	#

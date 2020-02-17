@@ -18,6 +18,15 @@ write to the Notice Log.
 
 BZAR is a component of the [Cyber Analytics Repository](https://car.mitre.org). It was originally located within that library, but due to requirements for Zeek packages it was moved to its own repository. It's still managed as a component of CAR.
 
+## Tuning BZAR for Your Environment
+
+BZAR must be tuned for your specific operational envrionment.  For example,
+some of the ATT&CK-like activity that BZAR detects may be authorized and legitimate
+activity in your environment. Therefore, these detections would produce lots of
+unnecessary entries in the Notice Log.  This can be tuned by the use of BZAR whitelists
+and by toggling on/off detection and/or reporting. See the CHANGES document for more 
+information.
+
 ## Complex Analytics for Detecting ATT&CK-like Activity
 
 The BZAR analytics use the Bro/Zeek Summary Statistics (SumStats) Framework to 
