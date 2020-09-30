@@ -5,6 +5,10 @@
 # Approved for public release.  Distribution unlimited.  Case number 18-3868.
 #
 
+# 20200929
+
+1. Rename .bro scripts to .zeek
+
 # 20191121
 
 1. Summary of Changes, New Functional Capabilities
