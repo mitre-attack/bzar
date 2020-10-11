@@ -1,7 +1,7 @@
 #
-# File: bzar_config_options.bro
+# File: bzar_config_options.zeek
 # Created: 20191121
-# Updated: 20191121
+# Updated: 20201009
 #
 # Copyright 2018 The MITRE Corporation.  All Rights Reserved.
 # Approved for public release.  Distribution unlimited.  Case number 18-3868.
@@ -31,52 +31,60 @@ export
 	#
 
 	# ATTACK::Credential_Access
-	option t1003_detect_option = T;
-	option t1003_report_option = T;
+	option t1003_006_detect_option = T;
+	option t1003_006_report_option = T;
 
 	# ATTACK::Defense_Evasion
-	option t1070_detect_option = T;
-	option t1070_report_option = T;
+	option t1070_001_detect_option = T;
+	option t1070_001_report_option = T;
 
 	# ATTACK::Execution
-	option t1035_detect_option = T;
-	option t1035_report_option = T;
+	option t1569_002_detect_option = T;
+	option t1569_002_report_option = T;
 
 	option t1047_detect_option = T;
 	option t1047_report_option = T;
 
-	option t1053_detect_option = T;
-	option t1053_report_option = T;
+	option t1053_002_detect_option = T;
+	option t1053_002_report_option = T;
+
+	option t1053_005_detect_option = T;
+	option t1053_005_report_option = T;
+
+	# ATTCK::Impact
+	option t1529_detect_option = T;
+	option t1529_report_option = T;
 
 	# ATTACK::Lateral_Movement
 	# Options to control whether or not to detect/report
-	# 'Remote File Copy to Windows Admin File Share'.
+	# 'Remote File Copy/Lateral Tool Transfer to Windows Admin File Share'.
 
-	option t1077_t1105_detect_option = T;
-	option t1077_t1105_report_option = T;
+	option t1021_002_t1570_detect_option = T;
+	option t1021_002_t1570_report_option = T;
 
 	# Options to control whether or not to detect/report
 	# 'Windows Admin File Share' by itself.
-	# Recommendation: Do not report this ATT&CK indicator without
+	# RECOMMENDATION: Do not report this ATT&CK indicator without
 	# additional context.
 
-	option t1077_detect_option = T;
-	option t1077_report_option = F;
+	option t1021_002_detect_option = T;
+	option t1021_002_report_option = F;
 
 	# Option to control whether or not to detect/report
-	# 'Remote File Copy' to any other network share, not related to T1077.
-	# Recommendation: Do not report this ATT&CK indicator without
+	# 'Remote File Copy/Lateral Tool Transfer' to any other
+	# network share, not related to 'Windows Admin File Share'.
+	# RECOMMENDATION: Do not report this ATT&CK indicator without
 	# additional context.
 
-	option t1105_detect_option = T;
-	option t1105_report_option = F;
+	option t1570_detect_option = T;
+	option t1570_report_option = F;
 
 	# ATTACK::Lateral_Movement_Multiple_Attempts
 	# Aggregate SumStats Indicator
 	# Option to control whether or not to write this SumStats indicator to Notice Log.
-	# It relies on t1077_detect_option.  If t1077_detect_option is False, this option has no effect.
+	# It relies on t1021_002_detect_option.  If t1021_002_detect_option is False, this option has no effect.
 
-	option t1077_multiple_attempts_report_option = T;
+	option t1021_002_multiple_attempts_report_option = T;
 
 	# ATTACK::Lateral_Movement_and_Execution
 	# Aggregate SumStats Indicator
@@ -91,11 +99,11 @@ export
 	option attack_lm_extracted_file_report_option = T;	
 
 	# ATTACK::Persistence
-	option t1004_detect_option = T;
-	option t1004_report_option = T;
+	option t1547_004_detect_option = T;
+	option t1547_004_report_option = T;
 
-	option t1013_detect_option = T;
-	option t1013_report_option = T;
+	option t1547_010_detect_option = T;
+	option t1547_010_report_option = T;
 
 	# ATTACK::Discovery
 	option t1016_detect_option = T;
@@ -176,28 +184,28 @@ export
 	# ATTACK::Credential_Access
 
 	# ATTACK::Credential_Access
-	option t1003_whitelist_orig_addrs   : set[addr] = {};
-	option t1003_whitelist_resp_addrs   : set[addr] = {};
-	option t1003_whitelist_orig_subnets : set[subnet] = {};
-	option t1003_whitelist_resp_subnets : set[subnet] = {};
-	option t1003_whitelist_orig_names   : set[string] = {};
-	option t1003_whitelist_resp_names   : set[string] = {};
+	option t1003_006_whitelist_orig_addrs   : set[addr] = {};
+	option t1003_006_whitelist_resp_addrs   : set[addr] = {};
+	option t1003_006_whitelist_orig_subnets : set[subnet] = {};
+	option t1003_006_whitelist_resp_subnets : set[subnet] = {};
+	option t1003_006_whitelist_orig_names   : set[string] = {};
+	option t1003_006_whitelist_resp_names   : set[string] = {};
 
 	# ATTACK::Defense_Evasion
-	option t1070_whitelist_orig_addrs   : set[addr] = {};
-	option t1070_whitelist_resp_addrs   : set[addr] = {};
-	option t1070_whitelist_orig_subnets : set[subnet] = {};
-	option t1070_whitelist_resp_subnets : set[subnet] = {};
-	option t1070_whitelist_orig_names   : set[string] = {};
-	option t1070_whitelist_resp_names   : set[string] = {};
+	option t1070_001_whitelist_orig_addrs   : set[addr] = {};
+	option t1070_001_whitelist_resp_addrs   : set[addr] = {};
+	option t1070_001_whitelist_orig_subnets : set[subnet] = {};
+	option t1070_001_whitelist_resp_subnets : set[subnet] = {};
+	option t1070_001_whitelist_orig_names   : set[string] = {};
+	option t1070_001_whitelist_resp_names   : set[string] = {};
 
 	# ATTACK::Execution
-	option t1035_whitelist_orig_addrs   : set[addr] = {};
-	option t1035_whitelist_resp_addrs   : set[addr] = {};
-	option t1035_whitelist_orig_subnets : set[subnet] = {};
-	option t1035_whitelist_resp_subnets : set[subnet] = {};
-	option t1035_whitelist_orig_names   : set[string] = {};
-	option t1035_whitelist_resp_names   : set[string] = {};
+	option t1569_002_whitelist_orig_addrs   : set[addr] = {};
+	option t1569_002_whitelist_resp_addrs   : set[addr] = {};
+	option t1569_002_whitelist_orig_subnets : set[subnet] = {};
+	option t1569_002_whitelist_resp_subnets : set[subnet] = {};
+	option t1569_002_whitelist_orig_names   : set[string] = {};
+	option t1569_002_whitelist_resp_names   : set[string] = {};
 
 	option t1047_whitelist_orig_addrs   : set[addr] = {};
 	option t1047_whitelist_resp_addrs   : set[addr] = {};
@@ -206,42 +214,57 @@ export
 	option t1047_whitelist_orig_names   : set[string] = {};
 	option t1047_whitelist_resp_names   : set[string] = {};
 
-	option t1053_whitelist_orig_addrs   : set[addr] = {};
-	option t1053_whitelist_resp_addrs   : set[addr] = {};
-	option t1053_whitelist_orig_subnets : set[subnet] = {};
-	option t1053_whitelist_resp_subnets : set[subnet] = {};
-	option t1053_whitelist_orig_names   : set[string] = {};
-	option t1053_whitelist_resp_names   : set[string] = {};
+	option t1053_002_whitelist_orig_addrs   : set[addr] = {};
+	option t1053_002_whitelist_resp_addrs   : set[addr] = {};
+	option t1053_002_whitelist_orig_subnets : set[subnet] = {};
+	option t1053_002_whitelist_resp_subnets : set[subnet] = {};
+	option t1053_002_whitelist_orig_names   : set[string] = {};
+	option t1053_002_whitelist_resp_names   : set[string] = {};
+
+	option t1053_005_whitelist_orig_addrs   : set[addr] = {};
+	option t1053_005_whitelist_resp_addrs   : set[addr] = {};
+	option t1053_005_whitelist_orig_subnets : set[subnet] = {};
+	option t1053_005_whitelist_resp_subnets : set[subnet] = {};
+	option t1053_005_whitelist_orig_names   : set[string] = {};
+	option t1053_005_whitelist_resp_names   : set[string] = {};
+
+	# ATTCK::Impact
+	option t1529_whitelist_orig_addrs   : set[addr] = {};
+	option t1529_whitelist_resp_addrs   : set[addr] = {};
+	option t1529_whitelist_orig_subnets : set[subnet] = {};
+	option t1529_whitelist_resp_subnets : set[subnet] = {};
+	option t1529_whitelist_orig_names   : set[string] = {};
+	option t1529_whitelist_resp_names   : set[string] = {};
 
 	# ATTACK::Lateral_Movement
-	option t1077_t1105_whitelist_orig_addrs   : set[addr] = {};
-	option t1077_t1105_whitelist_resp_addrs   : set[addr] = {};
-	option t1077_t1105_whitelist_orig_subnets : set[subnet] = {};
-	option t1077_t1105_whitelist_resp_subnets : set[subnet] = {};
-	option t1077_t1105_whitelist_orig_names   : set[string] = {};
-	option t1077_t1105_whitelist_resp_names   : set[string] = {};
+	option t1021_002_t1570_whitelist_orig_addrs   : set[addr] = {};
+	option t1021_002_t1570_whitelist_resp_addrs   : set[addr] = {};
+	option t1021_002_t1570_whitelist_orig_subnets : set[subnet] = {};
+	option t1021_002_t1570_whitelist_resp_subnets : set[subnet] = {};
+	option t1021_002_t1570_whitelist_orig_names   : set[string] = {};
+	option t1021_002_t1570_whitelist_resp_names   : set[string] = {};
 
-	option t1077_whitelist_orig_addrs   : set[addr] = {};
-	option t1077_whitelist_resp_addrs   : set[addr] = {};
-	option t1077_whitelist_orig_subnets : set[subnet] = {};
-	option t1077_whitelist_resp_subnets : set[subnet] = {};
-	option t1077_whitelist_orig_names   : set[string] = {};
-	option t1077_whitelist_resp_names   : set[string] = {};
+	option t1021_002_whitelist_orig_addrs   : set[addr] = {};
+	option t1021_002_whitelist_resp_addrs   : set[addr] = {};
+	option t1021_002_whitelist_orig_subnets : set[subnet] = {};
+	option t1021_002_whitelist_resp_subnets : set[subnet] = {};
+	option t1021_002_whitelist_orig_names   : set[string] = {};
+	option t1021_002_whitelist_resp_names   : set[string] = {};
 
-	option t1105_whitelist_orig_addrs   : set[addr] = {};
-	option t1105_whitelist_resp_addrs   : set[addr] = {};
-	option t1105_whitelist_orig_subnets : set[subnet] = {};
-	option t1105_whitelist_resp_subnets : set[subnet] = {};
-	option t1105_whitelist_orig_names   : set[string] = {};
-	option t1105_whitelist_resp_names   : set[string] = {};
+	option t1570_whitelist_orig_addrs   : set[addr] = {};
+	option t1570_whitelist_resp_addrs   : set[addr] = {};
+	option t1570_whitelist_orig_subnets : set[subnet] = {};
+	option t1570_whitelist_resp_subnets : set[subnet] = {};
+	option t1570_whitelist_orig_names   : set[string] = {};
+	option t1570_whitelist_resp_names   : set[string] = {};
 
 	# ATTACK::Lateral_Movement_Multiple_Attempts
-	option t1077_multiple_attempts_whitelist_orig_addrs   : set[addr] = {};
-	option t1077_multiple_attempts_whitelist_resp_addrs   : set[addr] = {};
-	option t1077_multiple_attempts_whitelist_orig_subnets : set[subnet] = {};
-	option t1077_multiple_attempts_whitelist_resp_subnets : set[subnet] = {};
-	option t1077_multiple_attempts_whitelist_orig_names   : set[string] = {};
-	option t1077_multiple_attempts_whitelist_resp_names   : set[string] = {};
+	option t1021_002_multiple_attempts_whitelist_orig_addrs   : set[addr] = {};
+	option t1021_002_multiple_attempts_whitelist_resp_addrs   : set[addr] = {};
+	option t1021_002_multiple_attempts_whitelist_orig_subnets : set[subnet] = {};
+	option t1021_002_multiple_attempts_whitelist_resp_subnets : set[subnet] = {};
+	option t1021_002_multiple_attempts_whitelist_orig_names   : set[string] = {};
+	option t1021_002_multiple_attempts_whitelist_resp_names   : set[string] = {};
 
 	# ATTACK::Lateral_Movement_and_Execution
 	option attack_lm_ex_whitelist_orig_addrs   : set[addr] = {};
@@ -260,19 +283,19 @@ export
 	option attack_lm_extracted_file_whitelist_resp_names   : set[string] = {};
 
 	# ATTACK::Persistence
-	option t1004_whitelist_orig_addrs   : set[addr] = {};
-	option t1004_whitelist_resp_addrs   : set[addr] = {};
-	option t1004_whitelist_orig_subnets : set[subnet] = {};
-	option t1004_whitelist_resp_subnets : set[subnet] = {};
-	option t1004_whitelist_orig_names   : set[string] = {};
-	option t1004_whitelist_resp_names   : set[string] = {};
+	option t1547_004_whitelist_orig_addrs   : set[addr] = {};
+	option t1547_004_whitelist_resp_addrs   : set[addr] = {};
+	option t1547_004_whitelist_orig_subnets : set[subnet] = {};
+	option t1547_004_whitelist_resp_subnets : set[subnet] = {};
+	option t1547_004_whitelist_orig_names   : set[string] = {};
+	option t1547_004_whitelist_resp_names   : set[string] = {};
 
-	option t1013_whitelist_orig_addrs   : set[addr] = {};
-	option t1013_whitelist_resp_addrs   : set[addr] = {};
-	option t1013_whitelist_orig_subnets : set[subnet] = {};
-	option t1013_whitelist_resp_subnets : set[subnet] = {};
-	option t1013_whitelist_orig_names   : set[string] = {};
-	option t1013_whitelist_resp_names   : set[string] = {};
+	option t1547_010_whitelist_orig_addrs   : set[addr] = {};
+	option t1547_010_whitelist_resp_addrs   : set[addr] = {};
+	option t1547_010_whitelist_orig_subnets : set[subnet] = {};
+	option t1547_010_whitelist_resp_subnets : set[subnet] = {};
+	option t1547_010_whitelist_orig_names   : set[string] = {};
+	option t1547_010_whitelist_resp_names   : set[string] = {};
 
 	# ATTACK::Discovery
 	option attack_discovery_whitelist_orig_addrs   : set[addr] = {};
@@ -379,4 +402,4 @@ export
 }
 #end export
 
-#end bzar_config_options.bro
+#end bzar_config_options.zeek

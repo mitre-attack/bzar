@@ -1,7 +1,7 @@
 #
-# File: bzar_dce-rpc_report.bro
+# File: bzar_dce-rpc_report.zeek
 # Created: 20180701
-# Updated: 20191121
+# Updated: 20201009
 #
 # Copyright 2018 The MITRE Corporation.  All Rights Reserved.
 # Approved for public release.  Distribution unlimited.  Case number 18-3868.
@@ -13,34 +13,34 @@ module BZAR;
 # Helper Functions
 #
 
-function rpc_t1003_log ( c : connection, rpc : string ) : bool
+function rpc_t1003_006_log ( c : connection, rpc : string ) : bool
 {
-	# T1003 Credential Dumping
+	# T1003.006 OS Credential Dumping: DCSync
 
 	#
 	# Raise Notice
 	#
 
-	if ( t1003_report_option )
+	if ( t1003_006_report_option )
 	{
 		# Get whitelist from config options
 		local w1 : BZAR::EndpointWhitelist;
 
-		w1$orig_addrs   = t1003_whitelist_orig_addrs;
-		w1$resp_addrs   = t1003_whitelist_resp_addrs;
+		w1$orig_addrs   = t1003_006_whitelist_orig_addrs;
+		w1$resp_addrs   = t1003_006_whitelist_resp_addrs;
 
-		w1$orig_subnets = t1003_whitelist_orig_subnets;
-		w1$resp_subnets = t1003_whitelist_resp_subnets;
+		w1$orig_subnets = t1003_006_whitelist_orig_subnets;
+		w1$resp_subnets = t1003_006_whitelist_resp_subnets;
 
-		w1$orig_names   = t1003_whitelist_orig_names;
-		w1$resp_names   = t1003_whitelist_resp_names;
+		w1$orig_names   = t1003_006_whitelist_orig_names;
+		w1$resp_names   = t1003_006_whitelist_resp_names;
 
  		# Check whitelist
 		if ( !BZAR::whitelist_test(c$id$orig_h, c$id$resp_h, w1) )
 		{
 			NOTICE([$note=ATTACK::Credential_Access,
 				$msg=rpc,
-				$sub=BZAR::attack_info["t1003"],
+				$sub=BZAR::attack_info["t1003.006"],
 				$conn=c]
 			);
 		}
@@ -50,34 +50,34 @@ function rpc_t1003_log ( c : connection, rpc : string ) : bool
 }
 
 
-function rpc_t1070_log ( c : connection, rpc : string ) : bool
+function rpc_t1070_001_log ( c : connection, rpc : string ) : bool
 {
-	# T1070 Indicator Removal on Host
+	# T1070.001 Indicator Removal on Host: Clear Windows Event Logs
 
 	#
 	# Raise Notice
 	#
 
-	if ( t1070_report_option )
+	if ( t1070_001_report_option )
 	{
 		# Get whitelist from config options
 		local w1 : BZAR::EndpointWhitelist;
 
-		w1$orig_addrs   = t1070_whitelist_orig_addrs;
-		w1$resp_addrs   = t1070_whitelist_resp_addrs;
+		w1$orig_addrs   = t1070_001_whitelist_orig_addrs;
+		w1$resp_addrs   = t1070_001_whitelist_resp_addrs;
 
-		w1$orig_subnets = t1070_whitelist_orig_subnets;
-		w1$resp_subnets = t1070_whitelist_resp_subnets;
+		w1$orig_subnets = t1070_001_whitelist_orig_subnets;
+		w1$resp_subnets = t1070_001_whitelist_resp_subnets;
 
-		w1$orig_names   = t1070_whitelist_orig_names;
-		w1$resp_names   = t1070_whitelist_resp_names;
+		w1$orig_names   = t1070_001_whitelist_orig_names;
+		w1$resp_names   = t1070_001_whitelist_resp_names;
 
  		# Check whitelist
 		if ( !BZAR::whitelist_test(c$id$orig_h, c$id$resp_h, w1) )
 		{
 			NOTICE([$note=ATTACK::Defense_Evasion,
 				$msg=rpc,
-				$sub=BZAR::attack_info["t1070"],
+				$sub=BZAR::attack_info["t1070.001"],
 				$conn=c]
 			);
 		}
@@ -87,34 +87,34 @@ function rpc_t1070_log ( c : connection, rpc : string ) : bool
 }
 
 
-function rpc_t1035_log ( c : connection, rpc : string ) : bool
+function rpc_t1569_002_log ( c : connection, rpc : string ) : bool
 {
-	# T1035 Service Execution
+	# T1569.002 System Services: Service Execution
 
 	#
 	# Raise Notice
 	#
 
-	if ( t1035_report_option )
+	if ( t1569_002_report_option )
 	{
 		# Get whitelist from config options
 		local w1 : BZAR::EndpointWhitelist;
 
-		w1$orig_addrs   = t1035_whitelist_orig_addrs;
-		w1$resp_addrs   = t1035_whitelist_resp_addrs;
+		w1$orig_addrs   = t1569_002_whitelist_orig_addrs;
+		w1$resp_addrs   = t1569_002_whitelist_resp_addrs;
 
-		w1$orig_subnets = t1035_whitelist_orig_subnets;
-		w1$resp_subnets = t1035_whitelist_resp_subnets;
+		w1$orig_subnets = t1569_002_whitelist_orig_subnets;
+		w1$resp_subnets = t1569_002_whitelist_resp_subnets;
 
-		w1$orig_names   = t1035_whitelist_orig_names;
-		w1$resp_names   = t1035_whitelist_resp_names;
+		w1$orig_names   = t1569_002_whitelist_orig_names;
+		w1$resp_names   = t1569_002_whitelist_resp_names;
 
  		# Check whitelist
 		if ( !BZAR::whitelist_test(c$id$orig_h, c$id$resp_h, w1) )
 		{
 			NOTICE([$note=ATTACK::Execution,
 				$msg=rpc,
-				$sub=BZAR::attack_info["t1035"],
+				$sub=BZAR::attack_info["t1569.002"],
 				$conn=c]
 			);
 		}
@@ -221,34 +221,34 @@ function rpc_t1047_log ( c : connection, rpc : string ) : bool
 }
 
 
-function rpc_t1053_log ( c : connection, rpc : string ) : bool
+function rpc_t1053_002_log ( c : connection, rpc : string ) : bool
 {
-	# T1053 Scheduled Task
+	# T1053.002 Scheduled Task/Job: At
 
 	#
 	# Raise Notice
 	#
 
-	if ( t1053_report_option )
+	if ( t1053_002_report_option )
 	{
 		# Get whitelist from config options
 		local w1 : BZAR::EndpointWhitelist;
 
-		w1$orig_addrs   = t1053_whitelist_orig_addrs;
-		w1$resp_addrs   = t1053_whitelist_resp_addrs;
+		w1$orig_addrs   = t1053_002_whitelist_orig_addrs;
+		w1$resp_addrs   = t1053_002_whitelist_resp_addrs;
 
-		w1$orig_subnets = t1053_whitelist_orig_subnets;
-		w1$resp_subnets = t1053_whitelist_resp_subnets;
+		w1$orig_subnets = t1053_002_whitelist_orig_subnets;
+		w1$resp_subnets = t1053_002_whitelist_resp_subnets;
 
-		w1$orig_names   = t1053_whitelist_orig_names;
-		w1$resp_names   = t1053_whitelist_resp_names;
+		w1$orig_names   = t1053_002_whitelist_orig_names;
+		w1$resp_names   = t1053_002_whitelist_resp_names;
 
  		# Check whitelist
 		if ( !BZAR::whitelist_test(c$id$orig_h, c$id$resp_h, w1) )
 		{
 			NOTICE([$note=ATTACK::Execution,
 				$msg=rpc,
-				$sub=BZAR::attack_info["t1053"],
+				$sub=BZAR::attack_info["t1053.002"],
 				$conn=c]
 			);
 		}
@@ -288,34 +288,101 @@ function rpc_t1053_log ( c : connection, rpc : string ) : bool
 }
 
 
-function rpc_t1004_log ( c : connection, rpc : string ) : bool
+function rpc_t1053_005_log ( c : connection, rpc : string ) : bool
 {
-	# T1004 Winlogon Helper DLL
+	# T1053.005 Scheduled Task/Job: Scheduled Task
 
 	#
 	# Raise Notice
 	#
 
-	if ( t1004_report_option )
+	if ( t1053_005_report_option )
 	{
 		# Get whitelist from config options
 		local w1 : BZAR::EndpointWhitelist;
 
-		w1$orig_addrs   = t1004_whitelist_orig_addrs;
-		w1$resp_addrs   = t1004_whitelist_resp_addrs;
+		w1$orig_addrs   = t1053_005_whitelist_orig_addrs;
+		w1$resp_addrs   = t1053_005_whitelist_resp_addrs;
 
-		w1$orig_subnets = t1004_whitelist_orig_subnets;
-		w1$resp_subnets = t1004_whitelist_resp_subnets;
+		w1$orig_subnets = t1053_005_whitelist_orig_subnets;
+		w1$resp_subnets = t1053_005_whitelist_resp_subnets;
 
-		w1$orig_names   = t1004_whitelist_orig_names;
-		w1$resp_names   = t1004_whitelist_resp_names;
+		w1$orig_names   = t1053_005_whitelist_orig_names;
+		w1$resp_names   = t1053_005_whitelist_resp_names;
 
  		# Check whitelist
 		if ( !BZAR::whitelist_test(c$id$orig_h, c$id$resp_h, w1) )
 		{
-			NOTICE([$note=ATTACK::Persistence,
+			NOTICE([$note=ATTACK::Execution,
 				$msg=rpc,
-				$sub=BZAR::attack_info["t1004"],
+				$sub=BZAR::attack_info["t1053.005"],
+				$conn=c]
+			);
+		}
+	}
+
+	#
+	# Set Observation
+	#
+
+	if ( attack_lm_ex_report_option )
+	{
+		# Get whitelist from config options
+		local w2 : BZAR::EndpointWhitelist;
+
+		w2$orig_addrs   = attack_lm_ex_whitelist_orig_addrs;
+		w2$resp_addrs   = attack_lm_ex_whitelist_resp_addrs;
+
+		w2$orig_subnets = attack_lm_ex_whitelist_orig_subnets;
+		w2$resp_subnets = attack_lm_ex_whitelist_resp_subnets;
+
+		w2$orig_names   = attack_lm_ex_whitelist_orig_names;
+		w2$resp_names   = attack_lm_ex_whitelist_resp_names;
+
+		# Check whitelist
+		if ( !BZAR::whitelist_test(c$id$orig_h, c$id$resp_h, w2) )
+		{
+			# Score == 1000 for RPC_EXEC
+
+			SumStats::observe("attack_lm_ex",
+				  SumStats::Key($host=c$id$resp_h),
+				  SumStats::Observation($num=1000)
+			);
+		}
+	}
+
+	return T;
+}
+
+
+function rpc_t1529_log ( c : connection, rpc : string ) : bool
+{
+	# T1529 System Shutdown/Reboot
+
+	#
+	# Raise Notice
+	#
+
+	if ( t1529_report_option )
+	{
+		# Get whitelist from config options
+		local w1 : BZAR::EndpointWhitelist;
+
+		w1$orig_addrs   = t1529_whitelist_orig_addrs;
+		w1$resp_addrs   = t1529_whitelist_resp_addrs;
+
+		w1$orig_subnets = t1529_whitelist_orig_subnets;
+		w1$resp_subnets = t1529_whitelist_resp_subnets;
+
+		w1$orig_names   = t1529_whitelist_orig_names;
+		w1$resp_names   = t1529_whitelist_resp_names;
+
+ 		# Check whitelist
+		if ( !BZAR::whitelist_test(c$id$orig_h, c$id$resp_h, w1) )
+		{
+			NOTICE([$note=ATTACK::Defense_Evasion,
+				$msg=rpc,
+				$sub=BZAR::attack_info["t1529"],
 				$conn=c]
 			);
 		}
@@ -325,34 +392,71 @@ function rpc_t1004_log ( c : connection, rpc : string ) : bool
 }
 
 
-function rpc_t1013_log ( c : connection, rpc : string ) : bool
+function rpc_t1547_004_log ( c : connection, rpc : string ) : bool
 {
-	# T1013 Port Monitors
+	# T1547.004 Boot or Logon Autostart Execution: Winlogon Helper DLL
 
 	#
 	# Raise Notice
 	#
 
-	if ( t1013_report_option )
+	if ( t1547_004_report_option )
 	{
 		# Get whitelist from config options
 		local w1 : BZAR::EndpointWhitelist;
 
-		w1$orig_addrs   = t1013_whitelist_orig_addrs;
-		w1$resp_addrs   = t1013_whitelist_resp_addrs;
+		w1$orig_addrs   = t1547_004_whitelist_orig_addrs;
+		w1$resp_addrs   = t1547_004_whitelist_resp_addrs;
 
-		w1$orig_subnets = t1013_whitelist_orig_subnets;
-		w1$resp_subnets = t1013_whitelist_resp_subnets;
+		w1$orig_subnets = t1547_004_whitelist_orig_subnets;
+		w1$resp_subnets = t1547_004_whitelist_resp_subnets;
 
-		w1$orig_names   = t1013_whitelist_orig_names;
-		w1$resp_names   = t1013_whitelist_resp_names;
+		w1$orig_names   = t1547_004_whitelist_orig_names;
+		w1$resp_names   = t1547_004_whitelist_resp_names;
 
  		# Check whitelist
 		if ( !BZAR::whitelist_test(c$id$orig_h, c$id$resp_h, w1) )
 		{
 			NOTICE([$note=ATTACK::Persistence,
 				$msg=rpc,
-				$sub=BZAR::attack_info["t1013"],
+				$sub=BZAR::attack_info["t1547.004"],
+				$conn=c]
+			);
+		}
+	}
+
+	return T;
+}
+
+
+function rpc_t1547_010_log ( c : connection, rpc : string ) : bool
+{
+	# T1547.010 Boot or Logon Autostart Execution: Port Monitors
+
+	#
+	# Raise Notice
+	#
+
+	if ( t1547_010_report_option )
+	{
+		# Get whitelist from config options
+		local w1 : BZAR::EndpointWhitelist;
+
+		w1$orig_addrs   = t1547_010_whitelist_orig_addrs;
+		w1$resp_addrs   = t1547_010_whitelist_resp_addrs;
+
+		w1$orig_subnets = t1547_010_whitelist_orig_subnets;
+		w1$resp_subnets = t1547_010_whitelist_resp_subnets;
+
+		w1$orig_names   = t1547_010_whitelist_orig_names;
+		w1$resp_names   = t1547_010_whitelist_resp_names;
+
+ 		# Check whitelist
+		if ( !BZAR::whitelist_test(c$id$orig_h, c$id$resp_h, w1) )
+		{
+			NOTICE([$note=ATTACK::Persistence,
+				$msg=rpc,
+				$sub=BZAR::attack_info["t1547.010"],
 				$conn=c]
 			);
 		}
@@ -1011,4 +1115,4 @@ function rpc_t1135_log ( c : connection, rpc : string ) : bool
 	return T;
 }
 
-#end bzar_dce-rpc_report.bro
+#end bzar_dce-rpc_report.zeek

@@ -1,7 +1,7 @@
 #
-# File: bzar_smb_consts.bro
+# File: bzar_smb_consts.zeek
 # Created: 20180701
-# Updated: 20191121
+# Updated: 20201009
 #
 # Copyright 2018 The MITRE Corporation.  All Rights Reserved.
 # Approved for public release.  Distribution unlimited.  Case number 18-3868.
@@ -17,8 +17,8 @@ export
 	# Lateral Movement onto the remote system
 	#
 	# Relevant ATT&CK Technique(s):
-	#    T1077 Windows Admin Shares [File Shares Only]
-	#    T1105 Remote File Copy
+	#    T1021.002 Remote Services: SMB/Windows Admin Shares [File Shares Only]
+	#    T1570 Lateral Tool Transfer
 
 	const smb_admin_file_shares = vector
 	(
@@ -54,4 +54,4 @@ export
 }
 #end export
 
-#end bzar_smb_consts.bro
+#end bzar_smb_consts.zeek

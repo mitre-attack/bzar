@@ -1,7 +1,7 @@
 #
-# File: bzar_smb2_detect.bro
+# File: bzar_smb2_detect.zeek
 # Created: 20180701
-# Updated: 20191121
+# Updated: 20201009
 #
 # Copyright 2018 The MITRE Corporation.  All Rights Reserved.
 # Approved for public release.  Distribution unlimited.  Case number 18-3868.
@@ -43,14 +43,14 @@ event smb2_tree_connect_request(c: connection, hdr: SMB2::Header, path: string) 
 	# Check if detect_option is True &&
 	# Check if SMB Tree Path is an Admin File Share
 
-	if ( BZAR::t1077_detect_option &&
+	if ( BZAR::t1021_002_detect_option &&
 	     BZAR::smb_admin_file_share_test(c$smb_state) )
 	{
 		# Looks like:
-		# T1077 Windows Admin Share (File Shares Only)
+		# T1021.002 Remote Services: SMB/Windows Admin Shares (File Shares Only)
 
 		# Raise Notice and/or Set Observation
-		BZAR::smb_t1077_log(c, smb_action);
+		BZAR::smb_t1021_002_log(c, smb_action);
 	}
 }
 
@@ -102,15 +102,15 @@ event smb2_write_request(c: connection, hdr: SMB2::Header, file_id: SMB2::GUID, 
 	# Check if detect_option is True &&
 	# Check if SMB Tree Path is an Admin File Share
 
-	if ( BZAR::t1077_t1105_detect_option &&
+	if ( BZAR::t1021_002_t1570_detect_option &&
 	     BZAR::smb_admin_file_share_test(c$smb_state) )
 	{
 		# Looks like:
-		# T1105 Remote File Copy &&
-		# T1077 Windows Admin Share (File Shares Only)
+		# T1570 Lateral Tool Transfer &&
+		# T1021.002 Remote Services: SMB/Windows Admin Shares (File Shares Only)
 
 		# Raise Notice and/or Set Observation
-		BZAR::smb_t1077_t1105_log(c, smb_action);
+		BZAR::smb_t1021_002_t1570_log(c, smb_action);
 	}
 }
 
@@ -130,4 +130,4 @@ event smb2_write_request(c: connection, hdr: SMB2::Header, file_id: SMB2::GUID, 
 #	SMB::write_file_log(c$smb_state); 
 #}
 
-#end bzar_smb2_detect.bro
+#end bzar_smb2_detect.zeek
