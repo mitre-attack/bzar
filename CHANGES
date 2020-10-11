@@ -5,9 +5,47 @@
 # Approved for public release.  Distribution unlimited.  Case number 18-3868.
 #
 
+# 20201009
+
+1. Summary of Changes, MITRE ATT&CK(R) Framework, Now w/Sub-Techniques
+The July 2020 (v7) release of MITRE's Enterprise ATT&CK framework officially introduced sub-techniques. For more information on sub-techniques, see the ATT&CK website at https://attack.mitre.org/resources/updates.
+
+This change in the ATT&CK framework affected several techniques that BZAR detected and reported.  Eight (8) techniques under the old framework now become ten (10) techniques/sub-techniques under the new framework, as mapped out below.
+
+1.1. Old: "T1003 Credential Dumping" | New: "T1003.006 OS Credential Dumping: DCSync"
+
+1.2. Old: "T1004 Winlogon Helper DLL" | New: "T1547.004 Boot or Logon Autostart Execution: Winlogon Helper DLL"
+
+1.3. Old: "T1013 Port Monitors" | New: "T1547.010 Boot or Logon Autostart Execution: Port Monitors"
+
+1.4. Old: "T1035 Service Execution" | New: "T1569.002 System Services: Service Execution"
+
+1.5. Old: "T1053 Scheduled Task" | Split Apart...
+	1.5.1. New: "T1053.002 Scheduled Task Job: At (Windows)"
+	1.5.2. New: "T1053.005 Scheduled Task Job: Scheduled Task"
+
+1.6. Old: "T1070 Indicator Removal on Host" | Split Apart...
+	1.6.1. New: "T1070.001 Indicator Removal on Host: Clear Windows Event Logs"
+	1.6.2. New: "T1529 System Shutdown/Reboot"
+
+1.7. Old: "T1077 Windows Admin Shares" | New: "T1021.002 Remote Services: SMB/Windows Admin Shares"
+
+1.8. Old: "T1105 Remote File Copy" | New: "T1570 Lateral Tool Transfer"
+
+
+2. Summary of Changes, BZAR Code
+The most obvious change BZAR users will observe are the strings written to the Zeek Notice Log.  The strings are defined in main.zeek, within string table 'const attack_info'.
+
+The BZAR naming convention uses the ATT&CK technique ID (e.g. T0177) for many of the configuration options, function names, and other consts.  For consistency, these items were all renamed, using new technique IDs.  
+
+Lastly, BZAR has a new Notice Type called, ATTACK::Impact.  The original BZAR code was already detecting RPC functions related to remote system shutdown, but it was reported as Defense Evasion under technique "T1070 Indicator Removal on Host."  The rationale being a shutdown would eliminate indicators within volatile memory. The ATT&CK framework now has a separate technique of "T1529 System Shutdown/Reboot" associated with the tactic of "Impact," so the RPC functions related to remote system shutdown are now reported under T1529 with the Notice Type of ATTACK::Impact.
+
+
+
 # 20200929
 
 1. Rename .bro scripts to .zeek
+
 
 # 20191121
 

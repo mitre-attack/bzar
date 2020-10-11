@@ -1,7 +1,7 @@
 #
-# File: bzar_dce-rpc_consts.bro
+# File: bzar_dce-rpc_consts.zeek
 # Created: 20180701
-# Updated: 20200217
+# Updated: 20201009
 #
 # Copyright 2018 The MITRE Corporation.  All Rights Reserved.
 # Approved for public release.  Distribution unlimited.  Case number 18-3868.
@@ -17,11 +17,11 @@ export
 	# Credential Access on the remote system
 	# 
 	# Relevant ATT&CK Technique(s):
-	#    T1003 Credential Dumping
+	#    T1003.006 OS Credential Dumping: DCSync
 
-	const t1003_rpc_strings : set[string] =
+	const t1003_006_rpc_strings : set[string] =
 	{
-		# T1003 Credential Dumping
+		# T1003.006 OS Credential Dumping: DCSync
 		["drsuapi::DRSReplicaSync"],
 		["drsuapi::DRSGetNCChanges"],
 	} &redef;
@@ -33,25 +33,15 @@ export
 	# Defense Evasion on the remote system
 	# 
 	# Relevant ATT&CK Technique(s):
-	#    T1070 Indicator Removal on Host
+	#    T1070.001 Indicator Removal on Host: Clear Windows Event Logs
 
-	const t1070_rpc_strings : set[string] =
+	const t1070_001_rpc_strings : set[string] =
 	{
-		# T1070 Indicator Removal on Host
+		# T1070.001 Indicator Removal on Host
 		# Clear Event Logs
 		["eventlog::ElfrClearELFW"],
 		["eventlog::ElfrClearELFA"],
 		["IEventService::EvtRpcClearLog"],
-
-		# T1070 Indicator Removal on Host
-		# Force System Shutdown or Reboot
-		["winreg::BaseInitiateSystemShutdown"],
-		["winreg::BaseInitiateSystemShutdownEx"],
-		["InitShutdown::BaseInitiateShutdown"],
-		["InitShutdown::BaseInitiateShutdownEx"],
-		["WindowsShutdown::WsdrInitiateShutdown"],
-		["winstation_rpc::RpcWinStationShutdownSystem"],
-		["samr::SamrShutdownSamServer"], # MSDN says not used on the wire
 	} &redef;
 
 
@@ -61,13 +51,14 @@ export
 	# Execution on the remote system
 	# 
 	# Relevant ATT&CK Technique(s):
-	#    T1035 Service Execution
+	#    T1569.002 System Services: Service Execution
 	#    T1047 Windows Management Instrumentation
-	#    T1053 Scheduled Tasks
+	#    T1053.002 Scheduled Task/Job: At
+	#    T1053.005 Scheduled Task/Job: Scheduled Task
 
-	const t1035_rpc_strings : set[string] = 
+	const t1569_002_rpc_strings : set[string] = 
 	{
-		# T1035 Service Execution
+		# T1569.002 System Services: Service Execution
 		["svcctl::CreateServiceWOW64W"],
 		["svcctl::CreateServiceWOW64A"],
 		["svcctl::CreateServiceW"],
@@ -83,13 +74,39 @@ export
 		["IWbemServices::ExecMethodAsync"],
 	} &redef;
 
-	const t1053_rpc_strings : set[string] =
+	const t1053_002_rpc_strings : set[string] =
 	{
-		# T1053 Scheduled Task
+		# T1053.002 Scheduled Task/Job: At
 		["atsvc::JobAdd"],
+	} &redef;
+
+	const t1053_005_rpc_strings : set[string] =
+	{
+		# T1053.005 Scheduled Task/Job: Scheduled Task
 		["ITaskSchedulerService::SchRpcRegisterTask"],
 		["ITaskSchedulerService::SchRpcRun"],
 		["ITaskSchedulerService::SchRpcEnableTask"],
+	} &redef;
+
+
+	# ATT&CK - Impact Techniques
+	#
+	# Windows DCE-RPC functions (endpoint::operation) used for
+	# Impact on the remote system
+	# 
+	# Relevant ATT&CK Technique(s):
+	#    T1529 System Shutdown/Reboot
+
+	const t1529_rpc_strings : set[string] =
+	{
+		# T1529 System Shutdown/Reboot
+		["winreg::BaseInitiateSystemShutdown"],
+		["winreg::BaseInitiateSystemShutdownEx"],
+		["InitShutdown::BaseInitiateShutdown"],
+		["InitShutdown::BaseInitiateShutdownEx"],
+		["WindowsShutdown::WsdrInitiateShutdown"],
+		["winstation_rpc::RpcWinStationShutdownSystem"],
+		["samr::SamrShutdownSamServer"], # MSDN says not used on the wire
 	} &redef;
 
 
@@ -99,19 +116,19 @@ export
 	# Persistence on the remote system
 	# 
 	# Relevant ATT&CK Technique(s):
-	#    T1004 Winlogon Helper DLL
-	#    T1013 Port Monitors
+	#    T1547.004 Boot or Logon Autostart Execution: Winlogon Helper DLL
+	#    T1547.010 Boot or Logon Autostart Execution: Port Monitors
 
-	const t1004_rpc_strings : set[string] = 
+	const t1547_004_rpc_strings : set[string] = 
 	{
-		# T1004 Winlogon Helper DLL
+		# T1547.004 Boot or Logon Autostart Execution: Winlogon Helper DLL
 		["ISecLogon::SeclCreateProcessWithLogonW"],
 		["ISecLogon::SeclCreateProcessWithLogonExW"],
 	} &redef;
 
-	const t1013_rpc_strings : set[string] = 
+	const t1547_010_rpc_strings : set[string] = 
 	{
-		# T1013 Port Monitors
+		# T1547.010 Boot or Logon Autostart Execution: Port Monitors
 		["spoolss::RpcAddMonitor"],		# aka winspool | spoolss
 		["spoolss::RpcAddPrintProcessor"],	# aka winspool | spool
 		["IRemoteWinspool::RpcAsyncAddMonitor"],
@@ -1734,4 +1751,4 @@ export
 	} &redef;
 }
 
-#end bzar_dce-rpc_consts.bro
+#end bzar_dce-rpc_consts.zeek

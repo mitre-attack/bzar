@@ -1,7 +1,7 @@
 #
-# File: bzar_dce-rpc_detect.bro
+# File: bzar_dce-rpc_detect.zeek
 # Created: 20180701
-# Updated: 20191121
+# Updated: 20201009
 #
 # Copyright 2018 The MITRE Corporation.  All Rights Reserved.
 # Approved for public release.  Distribution unlimited.  Case number 18-3868.
@@ -50,35 +50,35 @@ event dce_rpc_response(c: connection, fid: count, ctx_id: count, opnum: count, s
 	#
 	# ATTACK::Credential_Access
 	#
-	if ( rpc in t1003_rpc_strings && t1003_detect_option )
+	if ( rpc in t1003_006_rpc_strings && t1003_006_detect_option )
 	{
 		# Looks like:
-		# T1003 Credential Dumping
+		# T1003.006 OS Credential Dumping: DCSync
 
 		# Raise Notice and/or Set Observation
-		BZAR::rpc_t1003_log(c, rpc);
+		BZAR::rpc_t1003_006_log(c, rpc);
 	}
 	#
 	# ATTACK::Defense_Evasion
 	#
-	else if ( rpc in t1070_rpc_strings && t1070_detect_option )
+	else if ( rpc in t1070_001_rpc_strings && t1070_001_detect_option )
 	{
 		# Looks like:
-		# T1070 Indicator Removal on Host
+		# T1070.001 Indicator Removal on Host: Clear Windows Event Logs
 
 		# Raise Notice and/or Set Observation
-		BZAR::rpc_t1070_log(c, rpc);
+		BZAR::rpc_t1070_001_log(c, rpc);
 	}
 	#
 	# ATTACK::Execution
 	#
-	else if ( rpc in t1035_rpc_strings && t1035_detect_option )
+	else if ( rpc in t1569_002_rpc_strings && t1569_002_detect_option )
 	{
 		# Looks like:
-		# T1035 Service Execution
+		# T1569.002 System Services: Service Execution
 
 		# Raise Notice and/or Set Observation
-		BZAR::rpc_t1035_log(c, rpc);
+		BZAR::rpc_t1569_002_log(c, rpc);
 	}
 	else if ( rpc in t1047_rpc_strings && t1047_detect_option )
 	{
@@ -88,32 +88,51 @@ event dce_rpc_response(c: connection, fid: count, ctx_id: count, opnum: count, s
 		# Raise Notice and/or Set Observation
 		BZAR::rpc_t1047_log(c, rpc);
 	}
-	else if ( rpc in t1053_rpc_strings && t1053_detect_option )
+	else if ( rpc in t1053_002_rpc_strings && t1053_002_detect_option )
 	{
 		# Looks like:
-		# T1053 Scheduled Task
+		# T1053.002 Scheduled Task/Job: At
 
 		# Raise Notice and/or Set Observation
-		BZAR::rpc_t1053_log(c, rpc);
+		BZAR::rpc_t1053_002_log(c, rpc);
+	}
+	else if ( rpc in t1053_005_rpc_strings && t1053_005_detect_option )
+	{
+		# Looks like:
+		# T1053.005 Scheduled Task/Job: Scheduled Task
+
+		# Raise Notice and/or Set Observation
+		BZAR::rpc_t1053_005_log(c, rpc);
+	}
+	#
+	# ATTACK::Impact
+	#
+	else if ( rpc in t1529_rpc_strings && t1529_detect_option )
+	{
+		# Looks like:
+		# T1529 System Shutdown/Reboot
+
+		# Raise Notice and/or Set Observation
+		BZAR::rpc_t1529_log(c, rpc);
 	}
 	#
 	# ATTACK::Persistence
 	#
-	else if ( rpc in t1004_rpc_strings && t1004_detect_option )
+	else if ( rpc in t1547_004_rpc_strings && t1547_004_detect_option )
 	{
 		# Looks like:
-		# T1004 Winlogon Helper DLL
+		# T1547.004 Boot or Logon Autostart Execution: Winlogon Helper DLL
 
 		# Raise Notice and/or Set Observation
-		BZAR::rpc_t1004_log(c, rpc);
+		BZAR::rpc_t1547_004_log(c, rpc);
 	}
-	else if ( rpc in t1013_rpc_strings && t1013_detect_option )
+	else if ( rpc in t1547_010_rpc_strings && t1547_010_detect_option )
 	{
 		# Looks like:
-		# T1013 Port Monitors
+		# T1547.010 Boot or Logon Autostart Execution: Port Monitors
 
 		# Raise Notice and/or Set Observation
-		BZAR::rpc_t1013_log(c, rpc);
+		BZAR::rpc_t1547_010_log(c, rpc);
 	}
 	#
 	# ATTACK::Discovery
@@ -200,4 +219,4 @@ event dce_rpc_response(c: connection, fid: count, ctx_id: count, opnum: count, s
 	}
 }
 
-#end bzar_dce-rpc_detect.bro
+#end bzar_dce-rpc_detect.zeek

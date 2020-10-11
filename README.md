@@ -1,6 +1,6 @@
 # BZAR (Bro/Zeek ATT&CK-based Analytics and Reporting)
 
-## Introduction
+## 0. Introduction
 
 The BZAR project uses the Bro/Zeek Network Security Monitor to detect ATT&CK-based 
 adversarial activity.
@@ -18,7 +18,7 @@ write to the Notice Log.
 
 BZAR is a component of the [Cyber Analytics Repository](https://car.mitre.org). It was originally located within that library, but due to requirements for Zeek packages it was moved to its own repository. It's still managed as a component of CAR.
 
-## Tuning BZAR for Your Environment
+## 1. Tuning BZAR for Your Environment
 
 BZAR must be tuned for your specific operational envrionment.  For example,
 some of the ATT&CK-like activity that BZAR detects may be authorized and legitimate
@@ -27,14 +27,14 @@ unnecessary entries in the Notice Log.  This can be tuned by the use of BZAR whi
 and by toggling on/off detection and/or reporting. See the CHANGES document for more 
 information.
 
-## Complex Analytics for Detecting ATT&CK-like Activity
+## 2. Complex Analytics for Detecting ATT&CK-like Activity
 
 The BZAR analytics use the Bro/Zeek Summary Statistics (SumStats) Framework to 
 combine two or more simple indicators in SMB and DCE-RPC traffic to detect 
 ATT&CK-like activity with a greater degree of confidence.  Three (3) BZAR 
 analytics are described below.
 
-### SumStats Analytics for ATT&CK Lateral Movement and Execution
+### 2.1. SumStats Analytics for ATT&CK Lateral Movement and Execution
 
 Use SumStats to raise a Bro/Zeek Notice event if an SMB Lateral Movement 
 indicator (e.g., SMB File Write to a Windows Admin File Share: ADMIN$ or 
@@ -42,16 +42,17 @@ C$ only) is observed together with a DCE-RPC Execution indicator against
 the same (targeted) host, within a specified period of time.
 
 #### Relevant ATT&CK Techniques
-* [T1077 Windows Admin Shares](https://attack.mitre.org/techniques/T1077/) (file shares only, not named pipes), and
-* [T1105 Remote File Copy](https://attack.mitre.org/techniques/T1105/), and
+* [T1021.002 Remote Services: SMB/Windows Admin Shares](https://attack.mitre.org/techniques/T1021/002/) (file shares only, not named pipes), and
+* [T1570 Lateral Tool Transfer](https://attack.mitre.org/techniques/T1570/), and
 * One of the following:
-  * [T1035 Service Execution](https://attack.mitre.org/techniques/T1035/)
+  * [T1569.002 System Services: Service Execution](https://attack.mitre.org/techniques/T1569/002/)
   * [T1047 Windows Management Instrumentation](https://attack.mitre.org/techniques/T1047/)
-  * [T1053 Scheduled Task](https://attack.mitre.org/techniques/T1053/)
+  * [T1053.002 Scheduled Task/Job: At (Windows)](https://attack.mitre.org/techniques/T1053/002/)
+  * [T1053.005 Scheduled Task/Job: Scheduled Task](https://attack.mitre.org/techniques/T1053/005/)
 
 #### Relevant Indicators Detected by Bro/Zeek
 * `smb1_write_andx_response::c$smb_state$path` contains `ADMIN$` or `C$`
-* `smb2_write_request::c$smb_state$path` contains `ADMIN$` or `C$ *`
+* `smb2_write_request::c$smb_state$path**` contains `ADMIN$` or `C$`
 * `dce_rpc_response::c$dce_rpc$endpoint + c$dce_rpc$operation` contains any of the following:
     * `svcctl::CreateServiceW`
     * `svcctl::CreateServiceA`
@@ -66,7 +67,7 @@ the same (targeted) host, within a specified period of time.
 
 **NOTE:** Preference would be to detect smb2_write_response event (instead of smb2_write_request), because it would confirm the file was actually written to the remote destination. Unfortunately, Bro/Zeek does not have an event for that SMB message-type yet.
 
-### SumStats Analytics for ATT&CK Lateral Movement (Multiple Attempts)
+### 2.2. SumStats Analytics for ATT&CK Lateral Movement (Multiple Attempts)
 
 Use SumStats to raise a Bro/Zeek Notice event if multiple SMB Lateral 
 Movement indicators (e.g., multiple attempts to connect to a Windows Admin
@@ -75,13 +76,13 @@ regardless of write-attempts and regardless of whether or not any connection
 is successful --just connection attempts-- within a specified period of time.
 
 #### Relevant ATT&CK Techniques
-* [T1077 Windows Admin Shares](https://attack.mitre.org/techniques/T1077/) (file shares only, not named pipes)
+* [T1021.002 Remote Services: SMB/Windows Admin Shares](https://attack.mitre.org/techniques/T1021/002/) (file shares only, not named pipes)
 
 #### Indicators detected by Bro/Zeek
 * `smb1_tree_connect_andx_request::c$smb_state$path` contains `ADMIN$` or `C$`
 * `smb2_tree_connect_request::c$smb_state$path` contains `ADMIN$` or `C$`
 
-### SumStats Analytics for ATT&CK Discovery
+### 2.3. SumStats Analytics for ATT&CK Discovery
 
 Use SumStats to raise a Bro/Zeek Notice event if multiple instances of 
 DCE-RPC Discovery indicators are observed originating from the same host, 
@@ -159,14 +160,14 @@ within a specified period of time.
   * `wkssvc::NetrWkstaUserEnum`
 
 
-## Simple Indicators for Detecting ATT&CK-like Activity
+## 3. Simple Indicators for Detecting ATT&CK-like Activity
 
 In addition to the analytics described above, BZAR uses simple indicators 
 within SMB and DCE-RPC traffic to detect ATT&CK-like activity, although with 
 a lesser degree of confidence than detection via the SumStats analytics. 
 The BZAR indicators are grouped into six (6) categories, as described below.
 
-### Indicators for ATT&CK Lateral Movement
+### 3.1. Indicators for ATT&CK Lateral Movement
 
 Raise a Bro/Zeek Notice event if a single instance of an SMB Lateral 
 Movement indicator (e.g., SMB File Write to a Windows Admin File Share: 
@@ -174,17 +175,17 @@ ADMIN$ or C$ only) is observed, which indicates ATT&CK-like activity.
 
 #### Relevant ATT&CK Techniques
 
-* [T1077 Windows Admin Shares](https://attack.mitre.org/techniques/T1077/) (file shares only, not named pipes)
-* [T1105 Remote File Copy](https://attack.mitre.org/techniques/T1105/)
+* [T1021.002 Remote Services: SMB/Windows Admin Shares](https://attack.mitre.org/techniques/T1021/002/) (file shares only, not named pipes)
+* [T1570 Lateral Tool Transfer](https://attack.mitre.org/techniques/T1570/)
 
 #### Relevant Indicator(s) Detected by Bro/Zeek
 
 * `smb1_write_andx_response::c$smb_state$path` contains `ADMIN$` or `C$`
-* `smb2_write_request::c$smb_state$path` contains `ADMIN$` or `C$ *`
+* `smb2_write_request::c$smb_state$path**` contains `ADMIN$` or `C$`
 
 **NOTE:** Preference would be to detect smb2_write_response event (instead of smb2_write_request), because it would confirm the file was actually written to the remote destination. Unfortunately, Bro/Zeek does not have an event for that SMB message-type yet.
 
-### Indicators for File Extraction Framework
+### 3.2. Indicators for File Extraction Framework
 
 Launch the Bro/Zeek File Extraction Framework to save a copy of the file 
 associated with ATT&CK-like Lateral Movement onto a remote system.  Raise 
@@ -192,44 +193,99 @@ a Bro Notice event for the Lateral Movement Extracted File.
 
 #### Relevant ATT&CK Techniques
 
-* [T1077 Windows Admin Shares](https://attack.mitre.org/techniques/T1077/) (file shares only, not named pipes)
-* [T1105 Remote File Copy](https://attack.mitre.org/techniques/T1105/)
+* [T1021.002 Remote Services: SMB/Windows Admin Shares](https://attack.mitre.org/techniques/T1021/002/) (file shares only, not named pipes)
+* [T1570 Lateral Tool Transfer](https://attack.mitre.org/techniques/T1570/)
 
 #### Relevant Indicator(s) Detected by Bro/Zeek
 
 * `smb1_write_andx_response::c$smb_state$path` contains `ADMIN$` or `C$`
-* `smb2_write_request::c$smb_state$path` contains `ADMIN$` or `C$ *`
+* `smb2_write_request::c$smb_state$path**` contains `ADMIN$` or `C$`
 
 **NOTE:** Preference would be to detect smb2_write_response event (instead of smb2_write_request), because it would confirm the file was actually written to the remote destination. Unfortunately, Bro/Zeek does not have an event for that SMB message-type yet.
 
-### Indicators for ATT&CK Credential Access
+### 3.3. Indicators for ATT&CK Credential Access
 
 Raise a Bro/Zeek Notice event if a single instance of any of the following 
 Windows DCE-RPC functions (endpoint::operation) is observed, which 
 indicates ATT&CK-like Credential Access techniques on the remote system. 
 
 #### Relevant ATT&CK Technique(s)
-* [T1003 Credential Dumping](https://attack.mitre.org/techniques/T1003/)
+* [T1003.006 OS Credential Dumping: DCSync](https://attack.mitre.org/techniques/T1003/006/)
 
 #### Relevant Indicator(s) Detected by Bro/Zeek
 * `dce_rpc_response::c$dce_rpc$endpoint + c$dce_rpc$operation` contains any of the following:
   * `drsuapi::DRSReplicaSync`
   * `drsuapi::DRSGetNCChanges`
 
-### Indicators for ATT&CK Defense Evasion
+### 3.4. Indicators for ATT&CK Defense Evasion
 
 Raise a Bro/Zeek Notice event if a single instance of any of the following  
 Windows DCE-RPC functions (endpoint::operation) is observed, which 
 indicates ATT&CK-like Defense Evasion techniques on the remote system.
 
 #### Relevant ATT&CK Techniques
-* [T1070 Indicator Removal on Host](https://attack.mitre.org/techniques/T1070/)
+* [T1070.001 Indicator Removal on Host: Clear Windows Event Logs](https://attack.mitre.org/techniques/T1070/001/)
    
 #### Relevant Indicator(s) Detected by Bro/Zeek
 * `dce_rpc_response::c$dce_rpc$endpoint + c$dce_rpc$operation` contains any of the following:
     * `eventlog::ElfrClearELFW`
     * `eventlog::ElfrClearELFA`
     * `IEventService::EvtRpcClearLog`
+
+### 3.5. Indicators for ATT&CK Execution
+
+Raise a Bro/Zeek Notice event if a single instance of any of the following
+Windows DCE-RPC functions (endpoint::operation) is observed, which 
+indicates ATT&CK-like Execution techniques on the remote system.
+
+#### Relevant ATT&CK Technique(s)
+* [T1569.002 System Services: Service Execution](https://attack.mitre.org/techniques/T1569/002/)
+* [T1047 Windows Management Instrumentation](https://attack.mitre.org/techniques/T1047/)
+* [T1053.002 Scheduled Task/Job: At (Windows)](https://attack.mitre.org/techniques/T1053/002/)
+* [T1053.005 Scheduled Task/Job: Scheduled Task](https://attack.mitre.org/techniques/T1053/005/)
+
+#### Relevant Indicator(s) Detected by Bro/Zeek
+* `dce_rpc_response::c$dce_rpc$endpoint + c$dce_rpc$operation` contains any of the following:
+    * `svcctl::CreateServiceW`
+    * `svcctl::CreateServiceA`
+    * `svcctl::StartServiceW`
+    * `svcctl::StartServiceA`
+    * `IWbemServices::ExecMethod`
+    * `IWbemServices::ExecMethodAsync`
+    * `atsvc::JobAdd`
+    * `ITaskSchedulerService::SchRpcRegisterTask`
+    * `ITaskSchedulerService::SchRpcRun`
+    * `ITaskSchedulerService::SchRpcEnableTask`
+
+### 3.6. Indicators for ATT&CK Persistence
+Raise a Bro/Zeek Notice event if a single instance of any of the following
+Windows DCE-RPC functions (endpoint::operation) is observed, which 
+indicates ATT&CK-like Persistence techniques on the remote system.
+
+#### Relevant ATT&CK Technique(s):
+* [T1547.004 Boot or Logon Autostart Execution: Winlogon Helper DLL](https://attack.mitre.org/techniques/T1547/004/)
+* [T1547.010 Boot or Logon Autostart Execution: Port Monitors](https://attack.mitre.org/techniques/T1547/010/)
+
+#### Relevant Indicator(s) Detected by Bro/Zeek
+* `dce_rpc_response::c$dce_rpc$endpoint + c$dce_rpc$operation` contains any of the following:
+    * `ISecLogon::SeclCreateProcessWithLogonW`
+    * `ISecLogon::SeclCreateProcessWithLogonExW`
+    * `IRemoteWinspool::RpcAsyncAddMonitor`
+    * `IRemoteWinspool::RpcAsyncAddPrintProcessor`
+    * `spoolss::RpcAddMonitor` # a.k.a. winspool | spoolss
+    * `spoolss::RpcAddPrintProcessor` # a.k.a. winspool | spoolss
+
+### 3.7. Indicators for ATT&CK Impact
+
+Raise a Bro/Zeek Notice event if a single instance of any of the following  
+Windows DCE-RPC functions (endpoint::operation) is observed, which 
+indicates ATT&CK-like Impact techniques on the remote system.
+
+#### Relevant ATT&CK Techniques
+* [T1529 System Shutdown/Reboot](https://attack.mitre.org/techniques/T1529/)
+   
+#### Relevant Indicator(s) Detected by Bro/Zeek
+* `dce_rpc_response::c$dce_rpc$endpoint + c$dce_rpc$operation` contains any of the following:
     * `InitShutdown::BaseInitiateShutdown`
     * `InitShutdown::BaseInitiateShutdownEx`
     * `WindowsShutdown::WsdrInitiateShutdown`
@@ -238,50 +294,7 @@ indicates ATT&CK-like Defense Evasion techniques on the remote system.
     * `winstation_rpc::RpcWinStationShutdownSystem`
     * `samr::SamrShutdownSamServer` # MSDN says not used on the wire
 
-### Indicators for ATT&CK Execution
-
-Raise a Bro/Zeek Notice event if a single instance of any of the following
-Windows DCE-RPC functions (endpoint::operation) is observed, which 
-indicates ATT&CK-like Execution techniques on the remote system.
-
-#### Relevant ATT&CK Technique(s)
-* [T1035 Service Execution](https://attack.mitre.org/techniques/T1035/)
-* [T1047 Windows Management Instrumentation](https://attack.mitre.org/techniques/T1047/)
-* [T1053 Scheduled Tasks](https://attack.mitre.org/techniques/T1053/)
-
-#### Relevant Indicator(s) Detected by Bro/Zeek
-* `dce_rpc_response::c$dce_rpc$endpoint + c$dce_rpc$operation` contains any of the following:
-    * `atsvc::JobAdd`
-    * `ITaskSchedulerService::SchRpcEnableTask`
-    * `ITaskSchedulerService::SchRpcRegisterTask`
-    * `ITaskSchedulerService::SchRpcRun`
-    * `IWbemServices::ExecMethod`
-    * `IWbemServices::ExecMethodAsync`
-    * `svcctl::CreateServiceA"   `
-    * `svcctl::CreateServiceW`
-    * `svcctl::StartServiceA`
-    * `svcctl::StartServiceW`
-
-### Indicators for ATT&CK Persistence
-Raise a Bro/Zeek Notice event if a single instance of any of the following
-Windows DCE-RPC functions (endpoint::operation) is observed, which 
-indicates ATT&CK-like Persistence techniques on the remote system.
-
-#### Relevant ATT&CK Technique(s):
-* [T1004 Winlogon Helper DLL](https://attack.mitre.org/techniques/T1004/)
-* [T1013 Port Monitors](https://attack.mitre.org/techniques/T1013/)
-
-#### Relevant Indicator(s) Detected by Bro/Zeek
-* `dce_rpc_response::c$dce_rpc$endpoint + c$dce_rpc$operation` contains any of the following:
-    * `spoolss::RpcAddMonitor` # a.k.a. winspool | spoolss
-    * `spoolss::RpcAddPrintProcessor` # a.k.a. winspool | spoolss
-    * `IRemoteWinspool::RpcAsyncAddMonitor`
-    * `IRemoteWinspool::RpcAsyncAddPrintProcessor`
-    * `ISecLogon::SeclCreateProcessWithLogonW`
-    * `ISecLogon::SeclCreateProcessWithLogonExW`
-
-
-### Additional DCE-RPC Interfaces and Methods
+## 4. Additional DCE-RPC Interfaces and Methods
 
 The BZAR project adds 144 more Microsoft DCE-RPC Interface UUIDs
 (a.k.a. "endpoints") to the Bro/Zeek DCE_RPC::uuid_endpoint_map.
@@ -289,13 +302,22 @@ The BZAR project adds 144 more Microsoft DCE-RPC Interface UUIDs
 The BZAR project also adds 1,145 Microsoft DCE-RPC Interface Methods 
 (a.k.a. "operations") to the Bro/Zeek DCE_RPC::operations.
 
-## References
+See the Bro/Zeek script 'bzar_dce-rpc_consts' for more information.
+
+Most of the DCE-RPC endpoints and operations defined in
+'bzar_dce-rpc_consts' were merged into Zeek's main product line,
+version 3.2.0-dev.565 | 2020-05-26 21:55:54 +0000.  Ref: https://github.com/zeek/zeek/blob/master/scripts/base/protocols/dce-rpc/consts.zeek#L92
+
+## 5. References
 1. Microsoft Developer Network (MSDN) Library. MSDN Library > Open Specifications > Protocols > Windows Protocols > Technical Documents. https://msdn.microsoft.com/en-us/library/jj712081.aspx
 2. Marchand, "Windows Network Services Internals". 2006. http://index-of.es/Windows/win_net_srv.pdf
 
-## Contributing
+## 6. Contributing
 
 Contributions are welcome. This code is licensed under the same terms as the CAR repository. See the [LICENSE](LICENSE.txt) file and the Developer Certificate of Origin certification in the [CONTRIBUTING](/CONTRIBUTING.md) file in the root of the repository.
+
+
+The information in this README file is current, as of 10/09/2020.
 
 *Copyright 2018 The MITRE Corporation.  All Rights Reserved.  
 Approved for public release.  Distribution unlimited.  Case number 18-2489.*

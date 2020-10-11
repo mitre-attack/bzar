@@ -1,7 +1,7 @@
 #
-# File: bzar_smb_report.bro
+# File: bzar_smb_report.zeek
 # Created: 20180701
-# Updated: 20191121
+# Updated: 20201009
 #
 # Copyright 2018 The MITRE Corporation.  All Rights Reserved.
 # Approved for public release.  Distribution unlimited.  Case number 18-3868.
@@ -93,9 +93,10 @@ function smb_admin_file_share_test ( s : SMB::State ) : bool
 }
 
 
-function smb_t1077_log ( c : connection, action : string ) : bool
+function smb_t1021_002_log ( c : connection, action : string ) : bool
 {
-	# T1077 Windows Admin Share (ADMIN$ or C$ only)
+	# T1021.002 Remote Services: SMB/Windows Admin Shares
+	# (file shares only, not named pipes)
 	#
 	# Indicators
 	# 01:	SMB1-Tree-Connect-Request to ADMIN$ or C$
@@ -108,7 +109,7 @@ function smb_t1077_log ( c : connection, action : string ) : bool
 	# 01:	Write to notice.log:
 	#	"ATTACK::Lateral_Movement"<tab>
 	#	"Detected SMB::TREE_CONNECT to admin file share '<smb_tree_name>'"<tab>
-	#	"T1077 Windows Admin Share + T1105 Remote File Copy"
+	#	"T1021.002 Remote Services: SMB/Windows Admin Shares + T1570 Lateral Tool Transfer"
 	#
 	# 02:	Set Observation for SumStats
 
@@ -116,19 +117,19 @@ function smb_t1077_log ( c : connection, action : string ) : bool
 	# Raise Notice
 	#
 
-	if ( t1077_report_option ) 
+	if ( t1021_002_report_option ) 
 	{
 		# Get whitelist from config options
 		local w1 : BZAR::EndpointWhitelist;
 
-		w1$orig_addrs   = t1077_whitelist_orig_addrs;
-		w1$resp_addrs   = t1077_whitelist_resp_addrs;
+		w1$orig_addrs   = t1021_002_whitelist_orig_addrs;
+		w1$resp_addrs   = t1021_002_whitelist_resp_addrs;
 
-		w1$orig_subnets = t1077_whitelist_orig_subnets;
-		w1$resp_subnets = t1077_whitelist_resp_subnets;
+		w1$orig_subnets = t1021_002_whitelist_orig_subnets;
+		w1$resp_subnets = t1021_002_whitelist_resp_subnets;
 
-		w1$orig_names   = t1077_whitelist_orig_names;
-		w1$resp_names   = t1077_whitelist_resp_names;
+		w1$orig_names   = t1021_002_whitelist_orig_names;
+		w1$resp_names   = t1021_002_whitelist_resp_names;
 
 		# Check whitelist
 		if ( !BZAR::whitelist_test(c$id$orig_h, c$id$resp_h, w1) )
@@ -138,7 +139,7 @@ function smb_t1077_log ( c : connection, action : string ) : bool
 
 			NOTICE([$note=ATTACK::Lateral_Movement,
 				$msg=fmt(notice_msg, action, tree_name),
-				$sub=BZAR::attack_info["t1077"],
+				$sub=BZAR::attack_info["t1021.002"],
 				$conn=c]
 			);
 		}
@@ -148,24 +149,24 @@ function smb_t1077_log ( c : connection, action : string ) : bool
 	# Set Observation
 	#
 
-	if ( t1077_multiple_attempts_report_option )
+	if ( t1021_002_multiple_attempts_report_option )
 	{
 		# Get whitelist from config options
 		local w2 : BZAR::EndpointWhitelist;
 
-		w2$orig_addrs   = t1077_multiple_attempts_whitelist_orig_addrs;
-		w2$resp_addrs   = t1077_multiple_attempts_whitelist_resp_addrs;
+		w2$orig_addrs   = t1021_002_multiple_attempts_whitelist_orig_addrs;
+		w2$resp_addrs   = t1021_002_multiple_attempts_whitelist_resp_addrs;
 
-		w2$orig_subnets = t1077_multiple_attempts_whitelist_orig_subnets;
-		w2$resp_subnets = t1077_multiple_attempts_whitelist_resp_subnets;
+		w2$orig_subnets = t1021_002_multiple_attempts_whitelist_orig_subnets;
+		w2$resp_subnets = t1021_002_multiple_attempts_whitelist_resp_subnets;
 
-		w2$orig_names   = t1077_multiple_attempts_whitelist_orig_names;
-		w2$resp_names   = t1077_multiple_attempts_whitelist_resp_names;
+		w2$orig_names   = t1021_002_multiple_attempts_whitelist_orig_names;
+		w2$resp_names   = t1021_002_multiple_attempts_whitelist_resp_names;
 
 		# Check whitelist
 		if ( !BZAR::whitelist_test(c$id$orig_h, c$id$resp_h, w2) )
 		{
-			SumStats::observe("attack_lm_multiple_t1077",
+			SumStats::observe("attack_lm_multiple_t1021_002",
 				  SumStats::Key($host=c$id$orig_h),
 				  SumStats::Observation($num=1)
 			);
@@ -176,9 +177,10 @@ function smb_t1077_log ( c : connection, action : string ) : bool
 }
 
 
-function smb_t1077_t1105_log ( c : connection, action : string ) : bool
+function smb_t1021_002_t1570_log ( c : connection, action : string ) : bool
 {
-	# T1077 Windows Admin Share (ADMIN$ or C$ only)
+	# T1021.002 Remote Services: SMB/Windows Admin Shares
+	# (file shares only, not named pipes)
 	#
 	# Indicators
 	# 01:	SMB1-Tree-Connect-Request to ADMIN$ or C$
@@ -198,7 +200,7 @@ function smb_t1077_t1105_log ( c : connection, action : string ) : bool
 	# 01:	Write to notice.log:
 	#	"ATTACK::Lateral_Movement"<tab>
 	#	"Detected SMB::FILE_WRITE to admin file share '<smb_file_name>'"<tab>
-	#	"T1077 Windows Admin Share + T1105 Remote File Copy"
+	#	"T1021.002 Remote Services: SMB/Windows Admin Shares + T1570 Lateral Tool Transfer"
 	#
 	# 02:	Set Observation for SumStats
 
@@ -206,25 +208,25 @@ function smb_t1077_t1105_log ( c : connection, action : string ) : bool
 	# Raise Notice
 	#
 
-	if ( t1077_t1105_report_option )
+	if ( t1021_002_t1570_report_option )
 	{
 		# Get whitelist from config options
 		local w1 : BZAR::EndpointWhitelist;
 
-		w1$orig_addrs   = t1077_t1105_whitelist_orig_addrs;
-		w1$resp_addrs   = t1077_t1105_whitelist_resp_addrs;
+		w1$orig_addrs   = t1021_002_t1570_whitelist_orig_addrs;
+		w1$resp_addrs   = t1021_002_t1570_whitelist_resp_addrs;
 
-		w1$orig_subnets = t1077_t1105_whitelist_orig_subnets;
-		w1$resp_subnets = t1077_t1105_whitelist_resp_subnets;
+		w1$orig_subnets = t1021_002_t1570_whitelist_orig_subnets;
+		w1$resp_subnets = t1021_002_t1570_whitelist_resp_subnets;
 
-		w1$orig_names   = t1077_t1105_whitelist_orig_names;
-		w1$resp_names   = t1077_t1105_whitelist_resp_names;
+		w1$orig_names   = t1021_002_t1570_whitelist_orig_names;
+		w1$resp_names   = t1021_002_t1570_whitelist_resp_names;
 
 		# Check whitelist
 		if ( !BZAR::whitelist_test(c$id$orig_h, c$id$resp_h, w1) )
 		{
-			local t1 = BZAR::attack_info["t1077"];
-			local t2 = BZAR::attack_info["t1105"];
+			local t1 = BZAR::attack_info["t1021.002"];
+			local t2 = BZAR::attack_info["t1570"];
 
 			local notice_msg = "Detected %s admin file share \'%s\'";
 			local file_name  = BZAR::smb_full_path_and_file_name(c$smb_state);
@@ -270,4 +272,4 @@ function smb_t1077_t1105_log ( c : connection, action : string ) : bool
 	return T;
 }
 
-#end bzar_smb_report.bro
+#end bzar_smb_report.zeek
