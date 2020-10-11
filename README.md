@@ -1,6 +1,6 @@
 # BZAR (Bro/Zeek ATT&CK-based Analytics and Reporting)
 
-## 0. Introduction
+## 1. Introduction
 
 The BZAR project uses the Bro/Zeek Network Security Monitor to detect ATT&CK-based 
 adversarial activity.
@@ -18,7 +18,7 @@ write to the Notice Log.
 
 BZAR is a component of the [Cyber Analytics Repository](https://car.mitre.org). It was originally located within that library, but due to requirements for Zeek packages it was moved to its own repository. It's still managed as a component of CAR.
 
-## 1. Tuning BZAR for Your Environment
+## 2. Tuning BZAR for Your Environment
 
 BZAR must be tuned for your specific operational envrionment.  For example,
 some of the ATT&CK-like activity that BZAR detects may be authorized and legitimate
@@ -27,14 +27,14 @@ unnecessary entries in the Notice Log.  This can be tuned by the use of BZAR whi
 and by toggling on/off detection and/or reporting. See the CHANGES document for more 
 information.
 
-## 2. Complex Analytics for Detecting ATT&CK-like Activity
+## 3. Complex Analytics for Detecting ATT&CK-like Activity
 
 The BZAR analytics use the Bro/Zeek Summary Statistics (SumStats) Framework to 
 combine two or more simple indicators in SMB and DCE-RPC traffic to detect 
 ATT&CK-like activity with a greater degree of confidence.  Three (3) BZAR 
 analytics are described below.
 
-### 2.1. SumStats Analytics for ATT&CK Lateral Movement and Execution
+### 3.1. SumStats Analytics for ATT&CK Lateral Movement and Execution
 
 Use SumStats to raise a Bro/Zeek Notice event if an SMB Lateral Movement 
 indicator (e.g., SMB File Write to a Windows Admin File Share: ADMIN$ or 
@@ -67,7 +67,7 @@ the same (targeted) host, within a specified period of time.
 
 **NOTE:** Preference would be to detect smb2_write_response event (instead of smb2_write_request), because it would confirm the file was actually written to the remote destination. Unfortunately, Bro/Zeek does not have an event for that SMB message-type yet.
 
-### 2.2. SumStats Analytics for ATT&CK Lateral Movement (Multiple Attempts)
+### 3.2. SumStats Analytics for ATT&CK Lateral Movement (Multiple Attempts)
 
 Use SumStats to raise a Bro/Zeek Notice event if multiple SMB Lateral 
 Movement indicators (e.g., multiple attempts to connect to a Windows Admin
@@ -82,7 +82,7 @@ is successful --just connection attempts-- within a specified period of time.
 * `smb1_tree_connect_andx_request::c$smb_state$path` contains `ADMIN$` or `C$`
 * `smb2_tree_connect_request::c$smb_state$path` contains `ADMIN$` or `C$`
 
-### 2.3. SumStats Analytics for ATT&CK Discovery
+### 3.3. SumStats Analytics for ATT&CK Discovery
 
 Use SumStats to raise a Bro/Zeek Notice event if multiple instances of 
 DCE-RPC Discovery indicators are observed originating from the same host, 
@@ -160,14 +160,14 @@ within a specified period of time.
   * `wkssvc::NetrWkstaUserEnum`
 
 
-## 3. Simple Indicators for Detecting ATT&CK-like Activity
+## 4. Simple Indicators for Detecting ATT&CK-like Activity
 
 In addition to the analytics described above, BZAR uses simple indicators 
 within SMB and DCE-RPC traffic to detect ATT&CK-like activity, although with 
 a lesser degree of confidence than detection via the SumStats analytics. 
 The BZAR indicators are grouped into six (6) categories, as described below.
 
-### 3.1. Indicators for ATT&CK Lateral Movement
+### 4.1. Indicators for ATT&CK Lateral Movement
 
 Raise a Bro/Zeek Notice event if a single instance of an SMB Lateral 
 Movement indicator (e.g., SMB File Write to a Windows Admin File Share: 
@@ -185,7 +185,7 @@ ADMIN$ or C$ only) is observed, which indicates ATT&CK-like activity.
 
 **NOTE:** Preference would be to detect smb2_write_response event (instead of smb2_write_request), because it would confirm the file was actually written to the remote destination. Unfortunately, Bro/Zeek does not have an event for that SMB message-type yet.
 
-### 3.2. Indicators for File Extraction Framework
+### 4.2. Indicators for File Extraction Framework
 
 Launch the Bro/Zeek File Extraction Framework to save a copy of the file 
 associated with ATT&CK-like Lateral Movement onto a remote system.  Raise 
@@ -203,7 +203,7 @@ a Bro Notice event for the Lateral Movement Extracted File.
 
 **NOTE:** Preference would be to detect smb2_write_response event (instead of smb2_write_request), because it would confirm the file was actually written to the remote destination. Unfortunately, Bro/Zeek does not have an event for that SMB message-type yet.
 
-### 3.3. Indicators for ATT&CK Credential Access
+### 4.3. Indicators for ATT&CK Credential Access
 
 Raise a Bro/Zeek Notice event if a single instance of any of the following 
 Windows DCE-RPC functions (endpoint::operation) is observed, which 
@@ -217,7 +217,7 @@ indicates ATT&CK-like Credential Access techniques on the remote system.
   * `drsuapi::DRSReplicaSync`
   * `drsuapi::DRSGetNCChanges`
 
-### 3.4. Indicators for ATT&CK Defense Evasion
+### 4.4. Indicators for ATT&CK Defense Evasion
 
 Raise a Bro/Zeek Notice event if a single instance of any of the following  
 Windows DCE-RPC functions (endpoint::operation) is observed, which 
@@ -232,7 +232,7 @@ indicates ATT&CK-like Defense Evasion techniques on the remote system.
     * `eventlog::ElfrClearELFA`
     * `IEventService::EvtRpcClearLog`
 
-### 3.5. Indicators for ATT&CK Execution
+### 4.5. Indicators for ATT&CK Execution
 
 Raise a Bro/Zeek Notice event if a single instance of any of the following
 Windows DCE-RPC functions (endpoint::operation) is observed, which 
@@ -257,7 +257,7 @@ indicates ATT&CK-like Execution techniques on the remote system.
     * `ITaskSchedulerService::SchRpcRun`
     * `ITaskSchedulerService::SchRpcEnableTask`
 
-### 3.6. Indicators for ATT&CK Persistence
+### 4.6. Indicators for ATT&CK Persistence
 Raise a Bro/Zeek Notice event if a single instance of any of the following
 Windows DCE-RPC functions (endpoint::operation) is observed, which 
 indicates ATT&CK-like Persistence techniques on the remote system.
@@ -275,7 +275,7 @@ indicates ATT&CK-like Persistence techniques on the remote system.
     * `spoolss::RpcAddMonitor` # a.k.a. winspool | spoolss
     * `spoolss::RpcAddPrintProcessor` # a.k.a. winspool | spoolss
 
-### 3.7. Indicators for ATT&CK Impact
+### 4.7. Indicators for ATT&CK Impact
 
 Raise a Bro/Zeek Notice event if a single instance of any of the following  
 Windows DCE-RPC functions (endpoint::operation) is observed, which 
@@ -294,7 +294,7 @@ indicates ATT&CK-like Impact techniques on the remote system.
     * `winstation_rpc::RpcWinStationShutdownSystem`
     * `samr::SamrShutdownSamServer` # MSDN says not used on the wire
 
-## 4. Additional DCE-RPC Interfaces and Methods
+## 5. Additional DCE-RPC Interfaces and Methods
 
 The BZAR project adds 144 more Microsoft DCE-RPC Interface UUIDs
 (a.k.a. "endpoints") to the Bro/Zeek DCE_RPC::uuid_endpoint_map.
@@ -308,11 +308,11 @@ Most of the DCE-RPC endpoints and operations defined in
 'bzar_dce-rpc_consts' were merged into Zeek's main product line,
 version 3.2.0-dev.565 | 2020-05-26 21:55:54 +0000.  Ref: https://github.com/zeek/zeek/blob/master/scripts/base/protocols/dce-rpc/consts.zeek#L92
 
-## 5. References
+## 6. References
 1. Microsoft Developer Network (MSDN) Library. MSDN Library > Open Specifications > Protocols > Windows Protocols > Technical Documents. https://msdn.microsoft.com/en-us/library/jj712081.aspx
 2. Marchand, "Windows Network Services Internals". 2006. http://index-of.es/Windows/win_net_srv.pdf
 
-## 6. Contributing
+## 7. Contributing
 
 Contributions are welcome. This code is licensed under the same terms as the CAR repository. See the [LICENSE](LICENSE.txt) file and the Developer Certificate of Origin certification in the [CONTRIBUTING](/CONTRIBUTING.md) file in the root of the repository.
 
