@@ -89,6 +89,16 @@ event smb2_write_request(c: connection, hdr: SMB2::Header, file_id: SMB2::GUID, 
 } 
 
 
+@if ( Version::at_least("3.0") || ( Version::number == 20600 && Version::info$commit >= 206 ) )
+
+event smb2_write_response(c: connection, hdr: SMB2::Header, written_bytes: count) &priority=3
+{
+      # Keep track of the number of bytes in the Write Response.
+      # priority==3 ... We want to execute before writing to smb_files.log
+      c$smb_state$current_file$data_len_rsp = written_bytes;
+
+@else
+
 event smb2_write_request(c: connection, hdr: SMB2::Header, file_id: SMB2::GUID, offset: count, data_len: count) &priority=2 
 {
 	# NOTE: Preference would be to detect 'smb2_write_response' 
@@ -97,6 +107,7 @@ event smb2_write_request(c: connection, hdr: SMB2::Header, file_id: SMB2::GUID, 
 	#       remote destination.  Unfortuantely, Bro/Zeek does 
 	#       not have an event for that SMB message-type yet.
 
+@endif
 	local smb_action = "SMB::FILE_WRITE to";
 
 	# Check if detect_option is True &&
@@ -113,21 +124,5 @@ event smb2_write_request(c: connection, hdr: SMB2::Header, file_id: SMB2::GUID, 
 		BZAR::smb_t1021_002_t1570_log(c, smb_action);
 	}
 }
-
-
-# #
-# # WARNING: No event generated for SMB2_WRITE_RESPONSE
-# #
-#event smb2_write_response(c: connection, hdr: SMB2::Header, file_id: SMB2::GUID, written_bytes: count) &priority=3
-#{
-#	# Keep track of the number of bytes in the Write Response. 
-#	# priority==3 ... We want to execute before writing to smb_files.log
-#	c$smb_state$current_file$data_len_rsp = written_bytes;
-#}
-
-#event smb2_write_response(c: connection, hdr: SMB2::Header, file_id: SMB2::GUID, written_bytes: count) &priority=-5
-#{
-#	SMB::write_file_log(c$smb_state); 
-#}
 
 #end bzar_smb2_detect.zeek
