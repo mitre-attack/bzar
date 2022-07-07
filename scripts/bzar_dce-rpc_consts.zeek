@@ -421,7 +421,7 @@ export
 		"1a927394-352e-4553-ae3f-7cf4aafca620" = "WdsRpcInterface",
 		"811109bf-a4e1-11d1-ab54-00a0c91e9b45" = "winsi2",
 		"ccd8c074-d0e5-4a40-92b4-d074faa6ba28" = "Witness",
-	} &redef;
+	};
 
 
 	# Microsoft DCE-RPC Interface Methods (aka "operations") -- 1,145 more --
