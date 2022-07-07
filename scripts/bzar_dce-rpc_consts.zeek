@@ -22,8 +22,8 @@ export
 	const t1003_006_rpc_strings : set[string] =
 	{
 		# T1003.006 OS Credential Dumping: DCSync
-		["drsuapi::DRSReplicaSync"],
-		["drsuapi::DRSGetNCChanges"],
+		"drsuapi::DRSReplicaSync",
+		"drsuapi::DRSGetNCChanges",
 	} &redef;
 
 
@@ -39,9 +39,9 @@ export
 	{
 		# T1070.001 Indicator Removal on Host
 		# Clear Event Logs
-		["eventlog::ElfrClearELFW"],
-		["eventlog::ElfrClearELFA"],
-		["IEventService::EvtRpcClearLog"],
+		"eventlog::ElfrClearELFW",
+		"eventlog::ElfrClearELFA",
+		"IEventService::EvtRpcClearLog",
 	} &redef;
 
 
@@ -59,33 +59,33 @@ export
 	const t1569_002_rpc_strings : set[string] = 
 	{
 		# T1569.002 System Services: Service Execution
-		["svcctl::CreateServiceWOW64W"],
-		["svcctl::CreateServiceWOW64A"],
-		["svcctl::CreateServiceW"],
-		["svcctl::CreateServiceA"],
-		["svcctl::StartServiceW"],
-		["svcctl::StartServiceA"],
+		"svcctl::CreateServiceWOW64W",
+		"svcctl::CreateServiceWOW64A",
+		"svcctl::CreateServiceW",
+		"svcctl::CreateServiceA",
+		"svcctl::StartServiceW",
+		"svcctl::StartServiceA",
 	} &redef;
 
 	const t1047_rpc_strings : set[string] = 
 	{
 		# T1047 Windows Management Instrumentation
-		["IWbemServices::ExecMethod"],
-		["IWbemServices::ExecMethodAsync"],
+		"IWbemServices::ExecMethod",
+		"IWbemServices::ExecMethodAsync",
 	} &redef;
 
 	const t1053_002_rpc_strings : set[string] =
 	{
 		# T1053.002 Scheduled Task/Job: At
-		["atsvc::JobAdd"],
+		"atsvc::JobAdd",
 	} &redef;
 
 	const t1053_005_rpc_strings : set[string] =
 	{
 		# T1053.005 Scheduled Task/Job: Scheduled Task
-		["ITaskSchedulerService::SchRpcRegisterTask"],
-		["ITaskSchedulerService::SchRpcRun"],
-		["ITaskSchedulerService::SchRpcEnableTask"],
+		"ITaskSchedulerService::SchRpcRegisterTask",
+		"ITaskSchedulerService::SchRpcRun",
+		"ITaskSchedulerService::SchRpcEnableTask",
 	} &redef;
 
 
@@ -100,13 +100,13 @@ export
 	const t1529_rpc_strings : set[string] =
 	{
 		# T1529 System Shutdown/Reboot
-		["winreg::BaseInitiateSystemShutdown"],
-		["winreg::BaseInitiateSystemShutdownEx"],
-		["InitShutdown::BaseInitiateShutdown"],
-		["InitShutdown::BaseInitiateShutdownEx"],
-		["WindowsShutdown::WsdrInitiateShutdown"],
-		["winstation_rpc::RpcWinStationShutdownSystem"],
-		["samr::SamrShutdownSamServer"], # MSDN says not used on the wire
+		"winreg::BaseInitiateSystemShutdown",
+		"winreg::BaseInitiateSystemShutdownEx",
+		"InitShutdown::BaseInitiateShutdown",
+		"InitShutdown::BaseInitiateShutdownEx",
+		"WindowsShutdown::WsdrInitiateShutdown",
+		"winstation_rpc::RpcWinStationShutdownSystem",
+		"samr::SamrShutdownSamServer", # MSDN says not used on the wire
 	} &redef;
 
 
@@ -122,17 +122,17 @@ export
 	const t1547_004_rpc_strings : set[string] = 
 	{
 		# T1547.004 Boot or Logon Autostart Execution: Winlogon Helper DLL
-		["ISecLogon::SeclCreateProcessWithLogonW"],
-		["ISecLogon::SeclCreateProcessWithLogonExW"],
+		"ISecLogon::SeclCreateProcessWithLogonW",
+		"ISecLogon::SeclCreateProcessWithLogonExW",
 	} &redef;
 
 	const t1547_010_rpc_strings : set[string] = 
 	{
 		# T1547.010 Boot or Logon Autostart Execution: Port Monitors
-		["spoolss::RpcAddMonitor"],		# aka winspool | spoolss
-		["spoolss::RpcAddPrintProcessor"],	# aka winspool | spool
-		["IRemoteWinspool::RpcAsyncAddMonitor"],
-		["IRemoteWinspool::RpcAsyncAddPrintProcessor"],
+		"spoolss::RpcAddMonitor",		# aka winspool | spoolss
+		"spoolss::RpcAddPrintProcessor",	# aka winspool | spool
+		"IRemoteWinspool::RpcAsyncAddMonitor",
+		"IRemoteWinspool::RpcAsyncAddPrintProcessor",
 	} &redef;
 
 
@@ -156,115 +156,115 @@ export
 	const t1016_rpc_strings : set[string] =
 	{
 		# T1016 System Network Configuration Discovery
-		["srvsvc::NetrServerTransportEnum"],
-		["wkssvc::NetrWkstaTransportEnum"],
+		"srvsvc::NetrServerTransportEnum",
+		"wkssvc::NetrWkstaTransportEnum",
 	} &redef;
 
 	const t1018_rpc_strings : set[string] =
 	{
 		# T1018 Remote System Discovery 
-		["srvsvc::NetrServerGetInfo"],
-		["srvsvc::NetrServerAliasEnum"],
-		["wkssvc::NetrWkstaGetInfo"],
+		"srvsvc::NetrServerGetInfo",
+		"srvsvc::NetrServerAliasEnum",
+		"wkssvc::NetrWkstaGetInfo",
 	} &redef;
 
 	const t1033_rpc_strings : set[string] =
 	{
 		# T1033 System Owner/User Discovery 
-		["lsarpc::LsarGetUserName"],
-		["lsarpc::LsarEnumerateTrustedDomainsEx"],
-		["lsarpc::LsarGetSystemAccessAccount"],
+		"lsarpc::LsarGetUserName",
+		"lsarpc::LsarEnumerateTrustedDomainsEx",
+		"lsarpc::LsarGetSystemAccessAccount",
 
-		["lsarpc::LsarQueryDomainInformationPolicy"],
-		["lsarpc::LsarQueryInfoTrustedDomain"],
+		"lsarpc::LsarQueryDomainInformationPolicy",
+		"lsarpc::LsarQueryInfoTrustedDomain",
 
-		["samr::SamrEnumerateGroupsInDomain"],
-		["samr::SamrEnumerateDomainsInSamServer"],
+		"samr::SamrEnumerateGroupsInDomain",
+		"samr::SamrEnumerateDomainsInSamServer",
 
-		["samr::SamrQueryInformationDomain"],
-		["samr::SamrQueryInformationDomain2"],
-		["samr::SamrQueryInformationGroup"],
+		"samr::SamrQueryInformationDomain",
+		"samr::SamrQueryInformationDomain2",
+		"samr::SamrQueryInformationGroup",
 	} &redef;
 
 	const t1049_rpc_strings : set[string] =
 	{
 		# T1049 System Network Connections Discovery
-		["srvsvc::NetrConnectionEnum"],
-		["srvsvc::NetrSessionEnum"],
+		"srvsvc::NetrConnectionEnum",
+		"srvsvc::NetrSessionEnum",
 	} &redef;
 
 	const t1069_rpc_strings : set[string] =
 	{
 		# T1069 Permission Groups Discovery 
-		["lsarpc::LsarEnumerateAccountRights"],
-		["lsarpc::LsarEnumerateAccountsWithUserRight"],
-		["lsarpc::LsarEnumeratePrivileges"],
-		["lsarpc::LsarEnumeratePrivilegesAccount"],
-		["lsarpc::LsarLookupPrivilegeValue"],
-		["lsarpc::LsarLookupPrivilegeName"],
-		["lsarpc::LsarLookupPrivilegeDisplayName"],
+		"lsarpc::LsarEnumerateAccountRights",
+		"lsarpc::LsarEnumerateAccountsWithUserRight",
+		"lsarpc::LsarEnumeratePrivileges",
+		"lsarpc::LsarEnumeratePrivilegesAccount",
+		"lsarpc::LsarLookupPrivilegeValue",
+		"lsarpc::LsarLookupPrivilegeName",
+		"lsarpc::LsarLookupPrivilegeDisplayName",
 
-		["samr::SamrGetGroupsForUser"],
-		["samr::SamrGetAliasMembership"],
-		["samr::SamrGetMembersInAlias"],
-		["samr::SamrGetMembersInGroup"],
+		"samr::SamrGetGroupsForUser",
+		"samr::SamrGetAliasMembership",
+		"samr::SamrGetMembersInAlias",
+		"samr::SamrGetMembersInGroup",
 	} &redef;
 
 	const t1082_rpc_strings : set[string] =
 	{
 		# T1082 System Information Discovery
-		["lsarpc::LsarQueryInformationPolicy"],
-		["lsarpc::LsarQueryInformationPolicy2"],
-		["lsarpc::LsarQueryTrustedDomainInfo"],
-		["lsarpc::LsarQueryTrustedDomainInfoByName"],
+		"lsarpc::LsarQueryInformationPolicy",
+		"lsarpc::LsarQueryInformationPolicy2",
+		"lsarpc::LsarQueryTrustedDomainInfo",
+		"lsarpc::LsarQueryTrustedDomainInfoByName",
 
-		["samr::SamrGetUserDomainPasswordInformation"],
+		"samr::SamrGetUserDomainPasswordInformation",
 	} &redef;
 
 	const t1083_rpc_strings : set[string] =
 	{
 		# T1083 File & Directory Discovery
-		["srvsvc::NetrFileEnum"],
+		"srvsvc::NetrFileEnum",
 	} &redef;
 
 	const t1087_rpc_strings : set[string] =
 	{
 		# T1087 Account Discovery
-		["lsarpc::LsarEnumerateAccounts"],
-		["lsarpc::LsarLookupNames"],
-		["lsarpc::LsarLookupNames2"],
-		["lsarpc::LsarLookupNames3"],
-		["lsarpc::LsarLookupNames4"],
-		["lsarpc::LsarLookupSids"],
-		["lsarpc::LsarLookupSids2"],
-		["lsarpc::LsarLookupSids3"],
+		"lsarpc::LsarEnumerateAccounts",
+		"lsarpc::LsarLookupNames",
+		"lsarpc::LsarLookupNames2",
+		"lsarpc::LsarLookupNames3",
+		"lsarpc::LsarLookupNames4",
+		"lsarpc::LsarLookupSids",
+		"lsarpc::LsarLookupSids2",
+		"lsarpc::LsarLookupSids3",
 
-		["samr::SamrEnumerateAliasesInDomain"],
-		["samr::SamrEnumerateUsersInDomain"],
-		["samr::SamrLookupNamesInDomain"],
-		["samr::SamrLookupIdsInDomain"],
-		["samr::SamrLookupDomainInSamServer"],
-		["samr::SamrQueryDisplayInformation"],
-		["samr::SamrQueryDisplayInformation2"],
-		["samr::SamrQueryDisplayInformation3"],
-		["samr::SamrQueryInformationAlias"],
-		["samr::SamrQueryInformationUser"],
-		["samr::SamrQueryInformationUser2"],
+		"samr::SamrEnumerateAliasesInDomain",
+		"samr::SamrEnumerateUsersInDomain",
+		"samr::SamrLookupNamesInDomain",
+		"samr::SamrLookupIdsInDomain",
+		"samr::SamrLookupDomainInSamServer",
+		"samr::SamrQueryDisplayInformation",
+		"samr::SamrQueryDisplayInformation2",
+		"samr::SamrQueryDisplayInformation3",
+		"samr::SamrQueryInformationAlias",
+		"samr::SamrQueryInformationUser",
+		"samr::SamrQueryInformationUser2",
 
-		["wkssvc::NetrWkstaUserEnum"],
+		"wkssvc::NetrWkstaUserEnum",
 	} &redef;
 
 	const t1124_rpc_strings : set[string] =
 	{
 		# T1124 System Time Discovery
-		["srvsvc::NetrRemoteTOD"],
+		"srvsvc::NetrRemoteTOD",
 	} &redef;
 
 	const t1135_rpc_strings : set[string] =
 	{
 		# T1135 Network Share Discovery
-		["srvsvc::NetrShareEnum"],
-		["srvsvc::NetrShareGetInfo"],
+		"srvsvc::NetrShareEnum",
+		"srvsvc::NetrShareGetInfo",
 	} &redef;
 
 
@@ -277,150 +277,150 @@ export
 
 	redef DCE_RPC::uuid_endpoint_map +=
 	{
-		["0b1c2170-5732-4e0e-8cd3-d9b16f3b84d7"] = "authzr",
-		["e3d0d746-d2af-40fd-8a7a-0d7078bb7092"] = "BitsPeerAuth",
-		["b97db8b2-4c63-11cf-bff6-08002be23f2f"] = "clusapi",
-		["d61a27c6-8f53-11d0-bfa0-00a024151983"] = "CNtmsSvr",
-		["6bffd098-a112-3610-9833-46c3f874532d"] = "dhcpsrv",
-		["5b821720-f63b-11d0-aad2-00c04fc324db"] = "dhcpsrv2",
-		["8f09f000-b7ed-11ce-bbd2-00001a181cad"] = "dimsvc",
-		["7c44d7d4-31d5-424c-bd5e-2b3e1f323d22"] = "dsaop",
-		["77df7a80-f298-11d0-8358-00a024c480a8"] = "dscomm",
-		["708cca10-9569-11d1-b2a5-0060977d8118"] = "dscomm2",
-		["df1941c5-fe89-4e79-bf10-463657acf44d"] = "efsrpc",
-		["c681d488-d850-11d0-8c52-00c04fd90f7e"] = "efsrpc2",
-		["ea0a3165-4834-11d2-a6f8-00c04fa346cc"] = "fax",
-		["6099fc12-3eff-11d0-abd0-00c04fd91a4e"] = "faxclient",
-		["a8e0653c-2744-4389-a61d-7373df8b2292"] = "FileServerVssAgent",
-		["897e2e5f-93f3-4376-9c9c-fd2277495c27"] = "FrsTransport",
-		["4bb8ab1d-9ef9-4100-8eb6-dd4b4e418b72"] = "IADProxy",
-		["c4b0c7d9-abe0-4733-a1e1-9fdedf260c7a"] = "IADProxy2",
-		["03837516-098b-11d8-9414-505054503030"] = "IAlertDataCollector",
-		["0383751a-098b-11d8-9414-505054503030"] = "IApiTracingDataCollector",
-		["d99e6e71-fc88-11d0-b498-00a0c90312f3"] = "ICertAdminD",
-		["7fe0d935-dda6-443f-85d0-1cfb58fe41dd"] = "ICertAdminD2",
-		["d99e6e70-fc88-11d0-b498-00a0c90312f3"] = "ICertRequestD",
-		["5422fd3a-d4b8-4cef-a12e-e87d4ca22e90"] = "ICertRequestD2",
-		["879c8bbe-41b0-11d1-be11-00c04fb6bf70"] = "IClientSink",
-		["03837514-098b-11d8-9414-505054503030"] = "IConfigurationDataCollector",
-		["038374ff-098b-11d8-9414-505054503030"] = "IDataCollector",
-		["03837502-098b-11d8-9414-505054503030"] = "IDataCollectorCollection",
-		["03837520-098b-11d8-9414-505054503030"] = "IDataCollectorSet",
-		["03837524-098b-11d8-9414-505054503030"] = "IDataCollectorSetCollection",
-		["03837541-098b-11d8-9414-505054503030"] = "IDataManager",
-		["00020400-0000-0000-c000-000000000046"] = "IDispatch",
-		["d2d79df7-3400-11d0-b40b-00aa005ff586"] = "IDMNotify",
-		["3a410f21-553f-11d1-8e5e-00a0c92c9d5d"] = "IDMRemoteServer",
-		["00020404-0000-0000-c000-000000000046"] = "IEnumVARIANT",
-		["027947e1-d731-11ce-a357-000000000001"] = "IEnumWbemClassObject",
-		["f6beaff7-1e19-4fbb-9f8f-b89e2018337c"] = "IEventService",
-		["03837543-098b-11d8-9414-505054503030"] = "IFolderAction",
-		["03837544-098b-11d8-9414-505054503030"] = "IFolderActionCollection",
-		["7c4e1804-e342-483d-a43e-a850cfcc8d18"] = "IIISApplicationAdmin",
-		["bd0c73bc-805b-4043-9c30-9a28d64dd7d2"] = "IIISCertObj",
-		["e8fb8620-588f-11d2-9d61-00c04f79c5fe"] = "IIisServiceControl",
-		["c3fcc19e-a970-11d2-8b5a-00a0c9b7c9c4"] = "IManagedObject",
-		["034634fd-ba3f-11d1-856a-00a0c944138c"] = "IManageTelnetSessions",
-		["081e7188-c080-4ff3-9238-29f66d6cabfd"] = "IMessenger",
-		["8298d101-f992-43b7-8eca-5052d885b995"] = "IMSAdminBase2W",
-		["f612954d-3b0b-4c56-9563-227b7be624b4"] = "IMSAdminBase3W",
-		["70b51430-b6ca-11d0-b9b9-00a0c922e750"] = "IMSAdminBaseW",
-		["82ad4280-036b-11cf-972c-00aa006887b0"] = "inetinfo",
-		["4e934f30-341a-11d1-8fb1-00a024cb6019"] = "INtmsLibraryControl1",
-		["db90832f-6910-4d46-9f5e-9fd6bfa73903"] = "INtmsLibraryControl2",
-		["d02e4be0-3419-11d1-8fb1-00a024cb6019"] = "INtmsMediaServices1",
-		["bb39332c-bfee-4380-ad8a-badc8aff5bb6"] = "INtmsNotifySink",
-		["69ab7050-3059-11d1-8faf-00a024cb6019"] = "INtmsObjectInfo1",
-		["b057dc50-3059-11d1-8faf-00a024cb6019"] = "INtmsObjectManagement1",
-		["895a2c86-270d-489d-a6c0-dc2a9b35280e"] = "INtmsObjectManagement2",
-		["3bbed8d9-2c9a-4b21-8936-acb2f995be6c"] = "INtmsObjectManagement3",
-		["8da03f40-3419-11d1-8fb1-00a024cb6019"] = "INtmsSession1",
-		["784b693d-95f3-420b-8126-365c098659f2"] = "IOCSPAdminD",
-		["833e4100-aff7-4ac3-aac2-9f24c1457bce"] = "IPCHCollection",
-		["833e4200-aff7-4ac3-aac2-9f24c1457bce"] = "IPCHService",
-		["03837506-098b-11d8-9414-505054503030"] = "IPerformanceCounterDataCollector",
-		["f120a684-b926-447f-9df4-c966cb785648"] = "IRASrv",
-		["6619a740-8154-43be-a186-0319578e02db"] = "IRemoteDispatch",
-		["66a2db22-d706-11d0-a37b-00c04fc9da04"] = "IRemoteICFICSConfig",
-		["6139d8a4-e508-4ebb-bac7-d7f275145897"] = "IRemoteIPV6Config",
-		["66a2db1b-d706-11d0-a37b-00c04fc9da04"] = "IRemoteNetworkConfig",
-		["66a2db20-d706-11d0-a37b-00c04fc9da04"] = "IRemoteRouterRestart",
-		["66a2db21-d706-11d0-a37b-00c04fc9da04"] = "IRemoteSetDnsConfig",
-		["5ff9bdf6-bd91-4d8b-a614-d6317acc8dd8"] = "IRemoteSstpCertCheck",
-		["67e08fc2-2984-4b62-b92e-fc1aae64bbbb"] = "IRemoteStringIdConfig",
-		["00000131-0000-0000-c000-000000000046"] = "IRemUnknown",
-		["c5cebee2-9df5-4cdd-a08c-c2471bc144b4"] = "IResourceManager",
-		["2a3eb639-d134-422d-90d8-aaa1b5216202"] = "IResourceManager2",
-		["7d07f313-a53f-459a-bb12-012c15b1846e"] = "IRobustNtmsMediaServices1",
-		["833e41aa-aff7-4ac3-aac2-9f24c1457bce"] = "ISAFSession",
-		["0383753a-098b-11d8-9414-505054503030"] = "ISchedule",
-		["0383753d-098b-11d8-9414-505054503030"] = "IScheduleCollection",
-		["b9785960-524f-11df-8b6d-83dcded72085"] = "ISDKey",
-		["e65e8028-83e8-491b-9af7-aaf6bd51a0ce"] = "IServerHealthReport",
-		["20d15747-6c48-4254-a358-65039fd8c63c"] = "IServerHealthReport2",
-		["8165b19e-8d3a-4d0b-80c8-97de310db583"] = "IServicedComponentInfo",
-		["112b1dff-d9dc-41f7-869f-d67fee7cb591"] = "ITpmVirtualSmartCardManager",
-		["fdf8a2b9-02de-47f4-bc26-aa85ab5e5267"] = "ITpmVirtualSmartCardManager2",
-		["3c745a97-f375-4150-be17-5950f694c699"] = "ITpmVirtualSmartCardManager3",
-		["1a1bb35f-abb8-451c-a1ae-33d98f1bef4a"] = "ITpmVirtualSmartCardManagerStatusCallback",
-		["0383750b-098b-11d8-9414-505054503030"] = "ITraceDataCollector",
-		["03837512-098b-11d8-9414-505054503030"] = "ITraceDataProvider",
-		["03837510-098b-11d8-9414-505054503030"] = "ITraceDataProviderCollection",
-		["00020403-0000-0000-c000-000000000046"] = "ITypeComp",
-		["00020401-0000-0000-c000-000000000046"] = "ITypeInfo",
-		["00020412-0000-0000-c000-000000000046"] = "ITypeInfo2",
-		["00020402-0000-0000-c000-000000000046"] = "ITypeLib",
-		["00020411-0000-0000-c000-000000000046"] = "ITypeLib2",
-		["00000000-0000-0000-c000-000000000046"] = "IUnknown",
-		["03837534-098b-11d8-9414-505054503030"] = "IValueMap",
-		["03837533-098b-11d8-9414-505054503030"] = "IValueMapItem",
-		["d2d79df5-3400-11d0-b40b-00aa005ff586"] = "IVolumeClient",
-		["4bdafc52-fe6a-11d2-93f8-00105a11164a"] = "IVolumeClient2",
-		["135698d2-3a37-4d26-99df-e2bb6ae3ac61"] = "IVolumeClient3",
-		["deb01010-3a37-4d26-99df-e2bb6ae3ac61"] = "IVolumeClient4",
-		["214a0f28-b737-4026-b847-4f9e37d79529"] = "IVssDifferentialSoftwareSnapshotMgmt",
-		["01954e6b-9254-4e6e-808c-c9e05d007696"] = "IVssEnumMgmtObject",
-		["ae1c7110-2f60-11d3-8a39-00c04f72d8e3"] = "IVssEnumObject",
-		["fa7df749-66e7-4986-a27f-e2f04ae53772"] = "IVssSnapshotMgmt",
-		["29822ab7-f302-11d0-9953-00c04fd919c1"] = "IWamAdmin",
-		["29822ab8-f302-11d0-9953-00c04fd919c1"] = "IWamAdmin2",
-		["4f7ca01c-a9e5-45b6-b142-2332a1339c1d"] = "IWRMAccounting",
-		["481e06cf-ab04-4498-8ffe-124a0a34296d"] = "IWRMCalendar",
-		["21546ae8-4da5-445e-987f-627fea39c5e8"] = "IWRMConfig",
-		["943991a5-b3fe-41fa-9696-7f7b656ee34b"] = "IWRMMachineGroup",
-		["59602eb6-57b0-4fd8-aa4b-ebf06971fe15"] = "IWRMPolicy",
-		["f31931a9-832d-481c-9503-887a0e6a79f0"] = "IWRMProtocol",
-		["fc910418-55ca-45ef-b264-83d4ce7d30e0"] = "IWRMRemoteSessionMgmt",
-		["bc681469-9dd9-4bf4-9b3d-709f69efe431"] = "IWRMResourceGroup",
-		["e33c0cc4-0482-101a-bc0c-02608c6ba218"] = "locator",
-		["afc07e2e-311c-4435-808c-c483ffeec7c9"] = "lsacap",
-		["22e5386d-8b12-4bf0-b0ec-6a1ea419e366"] = "NetEventForwarder",
-		["d049b186-814f-11d1-9a3c-00c04fc9b232"] = "NtFrsApi",
-		["da5a86c5-12c2-4943-ab30-7f74a813d853"] = "PerflibV2",
-		["1088a980-eae5-11d0-8d9b-00a02453c337"] = "qm2qm",
-		["fdb3a030-065f-11d1-bb9b-00a024ea5525"] = "qmcomm",
-		["76d12b80-3467-11d3-91ff-0090272f9ea3"] = "qmcomm2",
-		["41208ee0-e970-11d1-9b9e-00e02c064c39"] = "qmmgmt",
-		["20610036-fa22-11cf-9823-00a0c911e5df"] = "rasrpc",
-		["497d95a6-2d27-4bf5-9bbd-a6046957133c"] = "RCMListener",
-		["bde95fdf-eee0-45de-9e12-e5a61cd0d4fe"] = "RCMPublic",
-		["6b5bdd1e-528c-422c-af8c-a4079be4fe48"] = "RemoteFW",
-		["1a9134dd-7b39-45ba-ad88-44d01ca47f28"] = "RemoteRead",
-		["2f5f6521-ca47-1068-b319-00dd010662db"] = "remotesp",
-		["1257b580-ce2f-4109-82d6-a9459d0bf6bc"] = "SessEnvPublicRpc",
-		["4b112204-0e19-11d3-b42b-0000f81feb9f"] = "ssdpsrv",
-		["2f5f6520-ca46-1067-b319-00dd010662da"] = "tapsrv",
-		["88143fd0-c28d-4b2b-8fef-8d882f6a9390"] = "TermServEnumeration",
-		["11899a43-2b68-4a76-92e3-a3d6ad8c26ce"] = "TermServNotification",
-		["484809d6-4239-471b-b5bc-61df8c23ac48"] = "TermSrvSession",
-		["4da1c422-943d-11d1-acae-00c04fc2aa3f"] = "trksvr",
-		["300f3532-38cc-11d0-a3f0-0020af6b0add"] = "trkwks",
-		["44e265dd-7daf-42cd-8560-3cdb6e7a2729"] = "TsProxyRpcInterface",
-		["53b46b02-c73b-4a3e-8dee-b16b80672fc0"] = "TSVIPPublic",
-		["8fb6d884-2388-11d0-8c35-00c04fda2795"] = "W32Time",
-		["1a927394-352e-4553-ae3f-7cf4aafca620"] = "WdsRpcInterface",
-		["811109bf-a4e1-11d1-ab54-00a0c91e9b45"] = "winsi2",
-		["ccd8c074-d0e5-4a40-92b4-d074faa6ba28"] = "Witness",
+		"0b1c2170-5732-4e0e-8cd3-d9b16f3b84d7" = "authzr",
+		"e3d0d746-d2af-40fd-8a7a-0d7078bb7092" = "BitsPeerAuth",
+		"b97db8b2-4c63-11cf-bff6-08002be23f2f" = "clusapi",
+		"d61a27c6-8f53-11d0-bfa0-00a024151983" = "CNtmsSvr",
+		"6bffd098-a112-3610-9833-46c3f874532d" = "dhcpsrv",
+		"5b821720-f63b-11d0-aad2-00c04fc324db" = "dhcpsrv2",
+		"8f09f000-b7ed-11ce-bbd2-00001a181cad" = "dimsvc",
+		"7c44d7d4-31d5-424c-bd5e-2b3e1f323d22" = "dsaop",
+		"77df7a80-f298-11d0-8358-00a024c480a8" = "dscomm",
+		"708cca10-9569-11d1-b2a5-0060977d8118" = "dscomm2",
+		"df1941c5-fe89-4e79-bf10-463657acf44d" = "efsrpc",
+		"c681d488-d850-11d0-8c52-00c04fd90f7e" = "efsrpc2",
+		"ea0a3165-4834-11d2-a6f8-00c04fa346cc" = "fax",
+		"6099fc12-3eff-11d0-abd0-00c04fd91a4e" = "faxclient",
+		"a8e0653c-2744-4389-a61d-7373df8b2292" = "FileServerVssAgent",
+		"897e2e5f-93f3-4376-9c9c-fd2277495c27" = "FrsTransport",
+		"4bb8ab1d-9ef9-4100-8eb6-dd4b4e418b72" = "IADProxy",
+		"c4b0c7d9-abe0-4733-a1e1-9fdedf260c7a" = "IADProxy2",
+		"03837516-098b-11d8-9414-505054503030" = "IAlertDataCollector",
+		"0383751a-098b-11d8-9414-505054503030" = "IApiTracingDataCollector",
+		"d99e6e71-fc88-11d0-b498-00a0c90312f3" = "ICertAdminD",
+		"7fe0d935-dda6-443f-85d0-1cfb58fe41dd" = "ICertAdminD2",
+		"d99e6e70-fc88-11d0-b498-00a0c90312f3" = "ICertRequestD",
+		"5422fd3a-d4b8-4cef-a12e-e87d4ca22e90" = "ICertRequestD2",
+		"879c8bbe-41b0-11d1-be11-00c04fb6bf70" = "IClientSink",
+		"03837514-098b-11d8-9414-505054503030" = "IConfigurationDataCollector",
+		"038374ff-098b-11d8-9414-505054503030" = "IDataCollector",
+		"03837502-098b-11d8-9414-505054503030" = "IDataCollectorCollection",
+		"03837520-098b-11d8-9414-505054503030" = "IDataCollectorSet",
+		"03837524-098b-11d8-9414-505054503030" = "IDataCollectorSetCollection",
+		"03837541-098b-11d8-9414-505054503030" = "IDataManager",
+		"00020400-0000-0000-c000-000000000046" = "IDispatch",
+		"d2d79df7-3400-11d0-b40b-00aa005ff586" = "IDMNotify",
+		"3a410f21-553f-11d1-8e5e-00a0c92c9d5d" = "IDMRemoteServer",
+		"00020404-0000-0000-c000-000000000046" = "IEnumVARIANT",
+		"027947e1-d731-11ce-a357-000000000001" = "IEnumWbemClassObject",
+		"f6beaff7-1e19-4fbb-9f8f-b89e2018337c" = "IEventService",
+		"03837543-098b-11d8-9414-505054503030" = "IFolderAction",
+		"03837544-098b-11d8-9414-505054503030" = "IFolderActionCollection",
+		"7c4e1804-e342-483d-a43e-a850cfcc8d18" = "IIISApplicationAdmin",
+		"bd0c73bc-805b-4043-9c30-9a28d64dd7d2" = "IIISCertObj",
+		"e8fb8620-588f-11d2-9d61-00c04f79c5fe" = "IIisServiceControl",
+		"c3fcc19e-a970-11d2-8b5a-00a0c9b7c9c4" = "IManagedObject",
+		"034634fd-ba3f-11d1-856a-00a0c944138c" = "IManageTelnetSessions",
+		"081e7188-c080-4ff3-9238-29f66d6cabfd" = "IMessenger",
+		"8298d101-f992-43b7-8eca-5052d885b995" = "IMSAdminBase2W",
+		"f612954d-3b0b-4c56-9563-227b7be624b4" = "IMSAdminBase3W",
+		"70b51430-b6ca-11d0-b9b9-00a0c922e750" = "IMSAdminBaseW",
+		"82ad4280-036b-11cf-972c-00aa006887b0" = "inetinfo",
+		"4e934f30-341a-11d1-8fb1-00a024cb6019" = "INtmsLibraryControl1",
+		"db90832f-6910-4d46-9f5e-9fd6bfa73903" = "INtmsLibraryControl2",
+		"d02e4be0-3419-11d1-8fb1-00a024cb6019" = "INtmsMediaServices1",
+		"bb39332c-bfee-4380-ad8a-badc8aff5bb6" = "INtmsNotifySink",
+		"69ab7050-3059-11d1-8faf-00a024cb6019" = "INtmsObjectInfo1",
+		"b057dc50-3059-11d1-8faf-00a024cb6019" = "INtmsObjectManagement1",
+		"895a2c86-270d-489d-a6c0-dc2a9b35280e" = "INtmsObjectManagement2",
+		"3bbed8d9-2c9a-4b21-8936-acb2f995be6c" = "INtmsObjectManagement3",
+		"8da03f40-3419-11d1-8fb1-00a024cb6019" = "INtmsSession1",
+		"784b693d-95f3-420b-8126-365c098659f2" = "IOCSPAdminD",
+		"833e4100-aff7-4ac3-aac2-9f24c1457bce" = "IPCHCollection",
+		"833e4200-aff7-4ac3-aac2-9f24c1457bce" = "IPCHService",
+		"03837506-098b-11d8-9414-505054503030" = "IPerformanceCounterDataCollector",
+		"f120a684-b926-447f-9df4-c966cb785648" = "IRASrv",
+		"6619a740-8154-43be-a186-0319578e02db" = "IRemoteDispatch",
+		"66a2db22-d706-11d0-a37b-00c04fc9da04" = "IRemoteICFICSConfig",
+		"6139d8a4-e508-4ebb-bac7-d7f275145897" = "IRemoteIPV6Config",
+		"66a2db1b-d706-11d0-a37b-00c04fc9da04" = "IRemoteNetworkConfig",
+		"66a2db20-d706-11d0-a37b-00c04fc9da04" = "IRemoteRouterRestart",
+		"66a2db21-d706-11d0-a37b-00c04fc9da04" = "IRemoteSetDnsConfig",
+		"5ff9bdf6-bd91-4d8b-a614-d6317acc8dd8" = "IRemoteSstpCertCheck",
+		"67e08fc2-2984-4b62-b92e-fc1aae64bbbb" = "IRemoteStringIdConfig",
+		"00000131-0000-0000-c000-000000000046" = "IRemUnknown",
+		"c5cebee2-9df5-4cdd-a08c-c2471bc144b4" = "IResourceManager",
+		"2a3eb639-d134-422d-90d8-aaa1b5216202" = "IResourceManager2",
+		"7d07f313-a53f-459a-bb12-012c15b1846e" = "IRobustNtmsMediaServices1",
+		"833e41aa-aff7-4ac3-aac2-9f24c1457bce" = "ISAFSession",
+		"0383753a-098b-11d8-9414-505054503030" = "ISchedule",
+		"0383753d-098b-11d8-9414-505054503030" = "IScheduleCollection",
+		"b9785960-524f-11df-8b6d-83dcded72085" = "ISDKey",
+		"e65e8028-83e8-491b-9af7-aaf6bd51a0ce" = "IServerHealthReport",
+		"20d15747-6c48-4254-a358-65039fd8c63c" = "IServerHealthReport2",
+		"8165b19e-8d3a-4d0b-80c8-97de310db583" = "IServicedComponentInfo",
+		"112b1dff-d9dc-41f7-869f-d67fee7cb591" = "ITpmVirtualSmartCardManager",
+		"fdf8a2b9-02de-47f4-bc26-aa85ab5e5267" = "ITpmVirtualSmartCardManager2",
+		"3c745a97-f375-4150-be17-5950f694c699" = "ITpmVirtualSmartCardManager3",
+		"1a1bb35f-abb8-451c-a1ae-33d98f1bef4a" = "ITpmVirtualSmartCardManagerStatusCallback",
+		"0383750b-098b-11d8-9414-505054503030" = "ITraceDataCollector",
+		"03837512-098b-11d8-9414-505054503030" = "ITraceDataProvider",
+		"03837510-098b-11d8-9414-505054503030" = "ITraceDataProviderCollection",
+		"00020403-0000-0000-c000-000000000046" = "ITypeComp",
+		"00020401-0000-0000-c000-000000000046" = "ITypeInfo",
+		"00020412-0000-0000-c000-000000000046" = "ITypeInfo2",
+		"00020402-0000-0000-c000-000000000046" = "ITypeLib",
+		"00020411-0000-0000-c000-000000000046" = "ITypeLib2",
+		"00000000-0000-0000-c000-000000000046" = "IUnknown",
+		"03837534-098b-11d8-9414-505054503030" = "IValueMap",
+		"03837533-098b-11d8-9414-505054503030" = "IValueMapItem",
+		"d2d79df5-3400-11d0-b40b-00aa005ff586" = "IVolumeClient",
+		"4bdafc52-fe6a-11d2-93f8-00105a11164a" = "IVolumeClient2",
+		"135698d2-3a37-4d26-99df-e2bb6ae3ac61" = "IVolumeClient3",
+		"deb01010-3a37-4d26-99df-e2bb6ae3ac61" = "IVolumeClient4",
+		"214a0f28-b737-4026-b847-4f9e37d79529" = "IVssDifferentialSoftwareSnapshotMgmt",
+		"01954e6b-9254-4e6e-808c-c9e05d007696" = "IVssEnumMgmtObject",
+		"ae1c7110-2f60-11d3-8a39-00c04f72d8e3" = "IVssEnumObject",
+		"fa7df749-66e7-4986-a27f-e2f04ae53772" = "IVssSnapshotMgmt",
+		"29822ab7-f302-11d0-9953-00c04fd919c1" = "IWamAdmin",
+		"29822ab8-f302-11d0-9953-00c04fd919c1" = "IWamAdmin2",
+		"4f7ca01c-a9e5-45b6-b142-2332a1339c1d" = "IWRMAccounting",
+		"481e06cf-ab04-4498-8ffe-124a0a34296d" = "IWRMCalendar",
+		"21546ae8-4da5-445e-987f-627fea39c5e8" = "IWRMConfig",
+		"943991a5-b3fe-41fa-9696-7f7b656ee34b" = "IWRMMachineGroup",
+		"59602eb6-57b0-4fd8-aa4b-ebf06971fe15" = "IWRMPolicy",
+		"f31931a9-832d-481c-9503-887a0e6a79f0" = "IWRMProtocol",
+		"fc910418-55ca-45ef-b264-83d4ce7d30e0" = "IWRMRemoteSessionMgmt",
+		"bc681469-9dd9-4bf4-9b3d-709f69efe431" = "IWRMResourceGroup",
+		"e33c0cc4-0482-101a-bc0c-02608c6ba218" = "locator",
+		"afc07e2e-311c-4435-808c-c483ffeec7c9" = "lsacap",
+		"22e5386d-8b12-4bf0-b0ec-6a1ea419e366" = "NetEventForwarder",
+		"d049b186-814f-11d1-9a3c-00c04fc9b232" = "NtFrsApi",
+		"da5a86c5-12c2-4943-ab30-7f74a813d853" = "PerflibV2",
+		"1088a980-eae5-11d0-8d9b-00a02453c337" = "qm2qm",
+		"fdb3a030-065f-11d1-bb9b-00a024ea5525" = "qmcomm",
+		"76d12b80-3467-11d3-91ff-0090272f9ea3" = "qmcomm2",
+		"41208ee0-e970-11d1-9b9e-00e02c064c39" = "qmmgmt",
+		"20610036-fa22-11cf-9823-00a0c911e5df" = "rasrpc",
+		"497d95a6-2d27-4bf5-9bbd-a6046957133c" = "RCMListener",
+		"bde95fdf-eee0-45de-9e12-e5a61cd0d4fe" = "RCMPublic",
+		"6b5bdd1e-528c-422c-af8c-a4079be4fe48" = "RemoteFW",
+		"1a9134dd-7b39-45ba-ad88-44d01ca47f28" = "RemoteRead",
+		"2f5f6521-ca47-1068-b319-00dd010662db" = "remotesp",
+		"1257b580-ce2f-4109-82d6-a9459d0bf6bc" = "SessEnvPublicRpc",
+		"4b112204-0e19-11d3-b42b-0000f81feb9f" = "ssdpsrv",
+		"2f5f6520-ca46-1067-b319-00dd010662da" = "tapsrv",
+		"88143fd0-c28d-4b2b-8fef-8d882f6a9390" = "TermServEnumeration",
+		"11899a43-2b68-4a76-92e3-a3d6ad8c26ce" = "TermServNotification",
+		"484809d6-4239-471b-b5bc-61df8c23ac48" = "TermSrvSession",
+		"4da1c422-943d-11d1-acae-00c04fc2aa3f" = "trksvr",
+		"300f3532-38cc-11d0-a3f0-0020af6b0add" = "trkwks",
+		"44e265dd-7daf-42cd-8560-3cdb6e7a2729" = "TsProxyRpcInterface",
+		"53b46b02-c73b-4a3e-8dee-b16b80672fc0" = "TSVIPPublic",
+		"8fb6d884-2388-11d0-8c35-00c04fda2795" = "W32Time",
+		"1a927394-352e-4553-ae3f-7cf4aafca620" = "WdsRpcInterface",
+		"811109bf-a4e1-11d1-ab54-00a0c91e9b45" = "winsi2",
+		"ccd8c074-d0e5-4a40-92b4-d074faa6ba28" = "Witness",
 	} &redef;
 
 
