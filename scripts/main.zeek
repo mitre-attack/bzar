@@ -120,7 +120,7 @@ function whitelist_test( orig_h : addr, resp_h : addr, w : BZAR::EndpointWhiteli
 	}
 	else if ( w?$orig_names )
 	{
-		when ( (local n1 = lookup_addr(orig_h)) && (n1 in w$orig_names) )
+		when [match] ( (local n1 = lookup_addr(orig_h)) && (n1 in w$orig_names) )
 		{
 			match = T;
 		}
@@ -131,7 +131,7 @@ function whitelist_test( orig_h : addr, resp_h : addr, w : BZAR::EndpointWhiteli
 	}
 	else if ( w?$resp_names )
 	{
-		when ( (local n2 = lookup_addr(resp_h)) && (n2 in w$resp_names) )
+		when [match] ( (local n2 = lookup_addr(resp_h)) && (n2 in w$resp_names) )
 		{
 			match = T;
 		}
