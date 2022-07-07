@@ -121,11 +121,10 @@ function whitelist_test( orig_h : addr, resp_h : addr, w : BZAR::EndpointWhiteli
 	else if ( w?$orig_names )
 	{
 @if ( Version::number >= 50000 )
-		when [w, orig_h, match] ( (local n1 = lookup_addr(orig_h)) && (n1 in w$orig_names) )
+		when [w, orig_h, match] ( (local n1 = lookup_addr(orig_h)) && (n1 in w$orig_names) ) {
 @else
-		when ( (local n1 = lookup_addr(orig_h)) && (n1 in w$orig_names) )
+		when ( (local n1 = lookup_addr(orig_h)) && (n1 in w$orig_names) ) {
 @endif
-		{
 			match = T;
 		}
 		timeout BZAR::whitelist_dns_timeout
@@ -135,12 +134,11 @@ function whitelist_test( orig_h : addr, resp_h : addr, w : BZAR::EndpointWhiteli
 	}
 	else if ( w?$resp_names )
 	{
-		@if ( Version::number >= 50000 )
-		when [w, resp_h, match] ( (local n2 = lookup_addr(resp_h)) && (n2 in w$resp_names) )
+@if ( Version::number >= 50000 )
+		when [w, resp_h, match] ( (local n2 = lookup_addr(resp_h)) && (n2 in w$resp_names) ) {
 @else
-		when ( (local n2 = lookup_addr(resp_h)) && (n2 in w$resp_names) )
+		when ( (local n2 = lookup_addr(resp_h)) && (n2 in w$resp_names) ) {
 @endif
-		{
 			match = T;
 		}
 		timeout BZAR::whitelist_dns_timeout
