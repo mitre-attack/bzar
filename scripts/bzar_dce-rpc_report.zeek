@@ -380,7 +380,7 @@ function rpc_t1529_log ( c : connection, rpc : string ) : bool
  		# Check whitelist
 		if ( !BZAR::whitelist_test(c$id$orig_h, c$id$resp_h, w1) )
 		{
-			NOTICE([$note=ATTACK::Defense_Evasion,
+			NOTICE([$note=ATTACK::Impact,
 				$msg=rpc,
 				$sub=BZAR::attack_info["t1529"],
 				$conn=c]
