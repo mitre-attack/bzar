@@ -22,8 +22,8 @@ export
 	const t1003_006_rpc_strings : set[string] =
 	{
 		# T1003.006 OS Credential Dumping: DCSync
-		["drsuapi::DRSReplicaSync"],
-		["drsuapi::DRSGetNCChanges"],
+		"drsuapi::DRSReplicaSync",
+		"drsuapi::DRSGetNCChanges",
 	} &redef;
 
 
@@ -39,9 +39,9 @@ export
 	{
 		# T1070.001 Indicator Removal on Host
 		# Clear Event Logs
-		["eventlog::ElfrClearELFW"],
-		["eventlog::ElfrClearELFA"],
-		["IEventService::EvtRpcClearLog"],
+		"eventlog::ElfrClearELFW",
+		"eventlog::ElfrClearELFA",
+		"IEventService::EvtRpcClearLog",
 	} &redef;
 
 
@@ -59,33 +59,33 @@ export
 	const t1569_002_rpc_strings : set[string] = 
 	{
 		# T1569.002 System Services: Service Execution
-		["svcctl::CreateServiceWOW64W"],
-		["svcctl::CreateServiceWOW64A"],
-		["svcctl::CreateServiceW"],
-		["svcctl::CreateServiceA"],
-		["svcctl::StartServiceW"],
-		["svcctl::StartServiceA"],
+		"svcctl::CreateServiceWOW64W",
+		"svcctl::CreateServiceWOW64A",
+		"svcctl::CreateServiceW",
+		"svcctl::CreateServiceA",
+		"svcctl::StartServiceW",
+		"svcctl::StartServiceA",
 	} &redef;
 
 	const t1047_rpc_strings : set[string] = 
 	{
 		# T1047 Windows Management Instrumentation
-		["IWbemServices::ExecMethod"],
-		["IWbemServices::ExecMethodAsync"],
+		"IWbemServices::ExecMethod",
+		"IWbemServices::ExecMethodAsync",
 	} &redef;
 
 	const t1053_002_rpc_strings : set[string] =
 	{
 		# T1053.002 Scheduled Task/Job: At
-		["atsvc::JobAdd"],
+		"atsvc::JobAdd",
 	} &redef;
 
 	const t1053_005_rpc_strings : set[string] =
 	{
 		# T1053.005 Scheduled Task/Job: Scheduled Task
-		["ITaskSchedulerService::SchRpcRegisterTask"],
-		["ITaskSchedulerService::SchRpcRun"],
-		["ITaskSchedulerService::SchRpcEnableTask"],
+		"ITaskSchedulerService::SchRpcRegisterTask",
+		"ITaskSchedulerService::SchRpcRun",
+		"ITaskSchedulerService::SchRpcEnableTask",
 	} &redef;
 
 
@@ -100,13 +100,13 @@ export
 	const t1529_rpc_strings : set[string] =
 	{
 		# T1529 System Shutdown/Reboot
-		["winreg::BaseInitiateSystemShutdown"],
-		["winreg::BaseInitiateSystemShutdownEx"],
-		["InitShutdown::BaseInitiateShutdown"],
-		["InitShutdown::BaseInitiateShutdownEx"],
-		["WindowsShutdown::WsdrInitiateShutdown"],
-		["winstation_rpc::RpcWinStationShutdownSystem"],
-		["samr::SamrShutdownSamServer"], # MSDN says not used on the wire
+		"winreg::BaseInitiateSystemShutdown",
+		"winreg::BaseInitiateSystemShutdownEx",
+		"InitShutdown::BaseInitiateShutdown",
+		"InitShutdown::BaseInitiateShutdownEx",
+		"WindowsShutdown::WsdrInitiateShutdown",
+		"winstation_rpc::RpcWinStationShutdownSystem",
+		"samr::SamrShutdownSamServer", # MSDN says not used on the wire
 	} &redef;
 
 
@@ -122,17 +122,17 @@ export
 	const t1547_004_rpc_strings : set[string] = 
 	{
 		# T1547.004 Boot or Logon Autostart Execution: Winlogon Helper DLL
-		["ISecLogon::SeclCreateProcessWithLogonW"],
-		["ISecLogon::SeclCreateProcessWithLogonExW"],
+		"ISecLogon::SeclCreateProcessWithLogonW",
+		"ISecLogon::SeclCreateProcessWithLogonExW",
 	} &redef;
 
 	const t1547_010_rpc_strings : set[string] = 
 	{
 		# T1547.010 Boot or Logon Autostart Execution: Port Monitors
-		["spoolss::RpcAddMonitor"],		# aka winspool | spoolss
-		["spoolss::RpcAddPrintProcessor"],	# aka winspool | spool
-		["IRemoteWinspool::RpcAsyncAddMonitor"],
-		["IRemoteWinspool::RpcAsyncAddPrintProcessor"],
+		"spoolss::RpcAddMonitor",		# aka winspool | spoolss
+		"spoolss::RpcAddPrintProcessor",	# aka winspool | spool
+		"IRemoteWinspool::RpcAsyncAddMonitor",
+		"IRemoteWinspool::RpcAsyncAddPrintProcessor",
 	} &redef;
 
 
@@ -156,115 +156,115 @@ export
 	const t1016_rpc_strings : set[string] =
 	{
 		# T1016 System Network Configuration Discovery
-		["srvsvc::NetrServerTransportEnum"],
-		["wkssvc::NetrWkstaTransportEnum"],
+		"srvsvc::NetrServerTransportEnum",
+		"wkssvc::NetrWkstaTransportEnum",
 	} &redef;
 
 	const t1018_rpc_strings : set[string] =
 	{
 		# T1018 Remote System Discovery 
-		["srvsvc::NetrServerGetInfo"],
-		["srvsvc::NetrServerAliasEnum"],
-		["wkssvc::NetrWkstaGetInfo"],
+		"srvsvc::NetrServerGetInfo",
+		"srvsvc::NetrServerAliasEnum",
+		"wkssvc::NetrWkstaGetInfo",
 	} &redef;
 
 	const t1033_rpc_strings : set[string] =
 	{
 		# T1033 System Owner/User Discovery 
-		["lsarpc::LsarGetUserName"],
-		["lsarpc::LsarEnumerateTrustedDomainsEx"],
-		["lsarpc::LsarGetSystemAccessAccount"],
+		"lsarpc::LsarGetUserName",
+		"lsarpc::LsarEnumerateTrustedDomainsEx",
+		"lsarpc::LsarGetSystemAccessAccount",
 
-		["lsarpc::LsarQueryDomainInformationPolicy"],
-		["lsarpc::LsarQueryInfoTrustedDomain"],
+		"lsarpc::LsarQueryDomainInformationPolicy",
+		"lsarpc::LsarQueryInfoTrustedDomain",
 
-		["samr::SamrEnumerateGroupsInDomain"],
-		["samr::SamrEnumerateDomainsInSamServer"],
+		"samr::SamrEnumerateGroupsInDomain",
+		"samr::SamrEnumerateDomainsInSamServer",
 
-		["samr::SamrQueryInformationDomain"],
-		["samr::SamrQueryInformationDomain2"],
-		["samr::SamrQueryInformationGroup"],
+		"samr::SamrQueryInformationDomain",
+		"samr::SamrQueryInformationDomain2",
+		"samr::SamrQueryInformationGroup",
 	} &redef;
 
 	const t1049_rpc_strings : set[string] =
 	{
 		# T1049 System Network Connections Discovery
-		["srvsvc::NetrConnectionEnum"],
-		["srvsvc::NetrSessionEnum"],
+		"srvsvc::NetrConnectionEnum",
+		"srvsvc::NetrSessionEnum",
 	} &redef;
 
 	const t1069_rpc_strings : set[string] =
 	{
 		# T1069 Permission Groups Discovery 
-		["lsarpc::LsarEnumerateAccountRights"],
-		["lsarpc::LsarEnumerateAccountsWithUserRight"],
-		["lsarpc::LsarEnumeratePrivileges"],
-		["lsarpc::LsarEnumeratePrivilegesAccount"],
-		["lsarpc::LsarLookupPrivilegeValue"],
-		["lsarpc::LsarLookupPrivilegeName"],
-		["lsarpc::LsarLookupPrivilegeDisplayName"],
+		"lsarpc::LsarEnumerateAccountRights",
+		"lsarpc::LsarEnumerateAccountsWithUserRight",
+		"lsarpc::LsarEnumeratePrivileges",
+		"lsarpc::LsarEnumeratePrivilegesAccount",
+		"lsarpc::LsarLookupPrivilegeValue",
+		"lsarpc::LsarLookupPrivilegeName",
+		"lsarpc::LsarLookupPrivilegeDisplayName",
 
-		["samr::SamrGetGroupsForUser"],
-		["samr::SamrGetAliasMembership"],
-		["samr::SamrGetMembersInAlias"],
-		["samr::SamrGetMembersInGroup"],
+		"samr::SamrGetGroupsForUser",
+		"samr::SamrGetAliasMembership",
+		"samr::SamrGetMembersInAlias",
+		"samr::SamrGetMembersInGroup",
 	} &redef;
 
 	const t1082_rpc_strings : set[string] =
 	{
 		# T1082 System Information Discovery
-		["lsarpc::LsarQueryInformationPolicy"],
-		["lsarpc::LsarQueryInformationPolicy2"],
-		["lsarpc::LsarQueryTrustedDomainInfo"],
-		["lsarpc::LsarQueryTrustedDomainInfoByName"],
+		"lsarpc::LsarQueryInformationPolicy",
+		"lsarpc::LsarQueryInformationPolicy2",
+		"lsarpc::LsarQueryTrustedDomainInfo",
+		"lsarpc::LsarQueryTrustedDomainInfoByName",
 
-		["samr::SamrGetUserDomainPasswordInformation"],
+		"samr::SamrGetUserDomainPasswordInformation",
 	} &redef;
 
 	const t1083_rpc_strings : set[string] =
 	{
 		# T1083 File & Directory Discovery
-		["srvsvc::NetrFileEnum"],
+		"srvsvc::NetrFileEnum",
 	} &redef;
 
 	const t1087_rpc_strings : set[string] =
 	{
 		# T1087 Account Discovery
-		["lsarpc::LsarEnumerateAccounts"],
-		["lsarpc::LsarLookupNames"],
-		["lsarpc::LsarLookupNames2"],
-		["lsarpc::LsarLookupNames3"],
-		["lsarpc::LsarLookupNames4"],
-		["lsarpc::LsarLookupSids"],
-		["lsarpc::LsarLookupSids2"],
-		["lsarpc::LsarLookupSids3"],
+		"lsarpc::LsarEnumerateAccounts",
+		"lsarpc::LsarLookupNames",
+		"lsarpc::LsarLookupNames2",
+		"lsarpc::LsarLookupNames3",
+		"lsarpc::LsarLookupNames4",
+		"lsarpc::LsarLookupSids",
+		"lsarpc::LsarLookupSids2",
+		"lsarpc::LsarLookupSids3",
 
-		["samr::SamrEnumerateAliasesInDomain"],
-		["samr::SamrEnumerateUsersInDomain"],
-		["samr::SamrLookupNamesInDomain"],
-		["samr::SamrLookupIdsInDomain"],
-		["samr::SamrLookupDomainInSamServer"],
-		["samr::SamrQueryDisplayInformation"],
-		["samr::SamrQueryDisplayInformation2"],
-		["samr::SamrQueryDisplayInformation3"],
-		["samr::SamrQueryInformationAlias"],
-		["samr::SamrQueryInformationUser"],
-		["samr::SamrQueryInformationUser2"],
+		"samr::SamrEnumerateAliasesInDomain",
+		"samr::SamrEnumerateUsersInDomain",
+		"samr::SamrLookupNamesInDomain",
+		"samr::SamrLookupIdsInDomain",
+		"samr::SamrLookupDomainInSamServer",
+		"samr::SamrQueryDisplayInformation",
+		"samr::SamrQueryDisplayInformation2",
+		"samr::SamrQueryDisplayInformation3",
+		"samr::SamrQueryInformationAlias",
+		"samr::SamrQueryInformationUser",
+		"samr::SamrQueryInformationUser2",
 
-		["wkssvc::NetrWkstaUserEnum"],
+		"wkssvc::NetrWkstaUserEnum",
 	} &redef;
 
 	const t1124_rpc_strings : set[string] =
 	{
 		# T1124 System Time Discovery
-		["srvsvc::NetrRemoteTOD"],
+		"srvsvc::NetrRemoteTOD",
 	} &redef;
 
 	const t1135_rpc_strings : set[string] =
 	{
 		# T1135 Network Share Discovery
-		["srvsvc::NetrShareEnum"],
-		["srvsvc::NetrShareGetInfo"],
+		"srvsvc::NetrShareEnum",
+		"srvsvc::NetrShareGetInfo",
 	} &redef;
 
 

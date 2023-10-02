@@ -94,7 +94,11 @@ event smb1_write_andx_response(c: connection, hdr: SMB1::Header, written_bytes: 
 
 event smb1_write_andx_response(c: connection, hdr: SMB1::Header, written_bytes: count) &priority=-5
 {
-	# Write to smb_files.log
+	# Write to smb_files.log, but only if we did see the request.
+	# See detection logic above.
+	if ( !c?$smb_state || !c$smb_state?$current_file )
+		return;
+
 	SMB::write_file_log(c$smb_state);
 }
 
